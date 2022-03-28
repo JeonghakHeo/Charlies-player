@@ -9,14 +9,6 @@ header {
 }
 
 .playlist {
-  background: linear-gradient(360deg, #1c1c1c 10%, #494949 360%);
-  /* background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(79, 237, 226, 1) 0%,
-    rgba(0, 1, 1, 1) 65%
-  ); */
-
   width: 100vw;
   height: 100%;
 }
@@ -26,16 +18,23 @@ header {
   display: flex;
   align-items: center;
   padding: 20px 40px 20px 40px;
-  /* background-color: aqua; */
+  background: linear-gradient(
+    0deg,
+    rgba(57, 129, 124, 1) 40%,
+    rgba(92, 216, 208, 1) 100%
+  );
 }
 
 .playlist-player {
   height: 70%;
-  /* padding: 20px 40px 20px 40px; */
-  /* background-color: grey; */
+  background: linear-gradient(
+    0deg,
+    rgba(18, 18, 18, 1) 80%,
+    rgba(36, 76, 73, 0.9794511554621849) 100%
+  );
 }
 
-.solid {
+.divider {
   border-top: 1px solid transparent;
   opacity: 0.1;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
@@ -50,6 +49,7 @@ header {
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: 90px;
 }
 
 /* Style the links inside the navigation bar */

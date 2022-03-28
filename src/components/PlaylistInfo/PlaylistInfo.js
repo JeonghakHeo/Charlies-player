@@ -26,22 +26,20 @@ const PlaylistDescription = () => {
               justifyContent: 'flex-end',
             }}
           >
-            <Typography variant='h4' component='h4'>
-              PUBLIC PLAYLIST
-            </Typography>
+            <Typography variant='h4'>PUBLIC PLAYLIST</Typography>
 
             <Typography variant='h1' component='h1'>
               I FEEL DEAM GOOD!
             </Typography>
-            <Typography variant='h4' component='h4'>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar
-                  src={logo}
-                  sx={{ width: '30px', height: '30px', marginRight: '5px' }}
-                />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                src={logo}
+                sx={{ width: '30px', height: '30px', marginRight: '5px' }}
+              />
+              <Typography variant='h4'>
                 Mellisa Gutierrez • 51 likes • 236 songs, 14h 1m
-              </Box>
-            </Typography>
+              </Typography>
+            </Box>
           </Box>
         </Grid>
       </Grid>

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
@@ -23,7 +22,7 @@ const Navbar = () => {
             size='small'
             edge='start'
             color='white'
-            sx={{ mr: 2, backgroundColor: '#000', opacity: '0.5' }}
+            sx={{ mr: 2, backgroundColor: '#1c3e3c' }}
           >
             <ArrowBackIosNewIcon fontSize='small' />
           </IconButton>
@@ -46,19 +45,26 @@ const Navbar = () => {
           </Typography>
           <Box
             sx={{
-              width: '95px',
-              height: '40px',
-              backgroundColor: 'black',
+              width: '105px',
+              height: '35px',
+              backgroundColor: '#1c3e3c',
               borderRadius: '35px',
               display: 'flex',
-              justifyContent: 'space-around',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ width: '30px', height: '30px' }}>
+            <Avatar
+              sx={{
+                width: '30px',
+                height: '30px',
+                marginLeft: '2px',
+                marginRight: '10px',
+                backgroundColor: '#535353',
+              }}
+            >
               <PersonOutlineIcon fontSize='medium' />
             </Avatar>
-            <Typography variant='h4' component='h4' textTransform='none'>
+            <Typography variant='h4' textTransform='none'>
               Charlie
             </Typography>
           </Box>

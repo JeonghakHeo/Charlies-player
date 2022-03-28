@@ -6,7 +6,7 @@ const theme = createTheme({
       main: '#1DB954',
     },
     secondary: {
-      main: '#5e6161',
+      main: '#b2b2b2',
     },
     dark: {
       main: '#000',
@@ -28,13 +28,21 @@ const theme = createTheme({
     },
     h3: {
       color: '#fff',
-      fontSize: '1rem',
-      fontWeight: '800',
+      fontSize: '0.8rem',
+      letterSpacing: '2px',
     },
     h4: {
       color: '#fff',
       fontSize: '0.8rem',
       fontWeight: '800',
+    },
+    body1: {
+      color: '#fff',
+      fontSize: '1rem',
+    },
+    subtitle1: {
+      color: '#b2b2b2',
+      fontSize: '1rem',
     },
   },
 })

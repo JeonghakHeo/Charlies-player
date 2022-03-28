@@ -21,7 +21,6 @@ const Main = ({ token }) => {
           <div className='playlist-info'>
             <PlaylistInfo />
           </div>
-          <hr className='solid' />
           <div className='playlist-player'>
             <Playlists />
           </div>
