@@ -71,6 +71,7 @@
 }
 
 .divider {
+  width: 100%;
   border-top: 1px solid transparent;
   opacity: 0.1;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,

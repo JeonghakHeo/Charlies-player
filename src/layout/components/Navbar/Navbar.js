@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -21,6 +21,7 @@ const Navbar = () => {
             size='small'
             edge='start'
             color='white'
+            disableRipple
             sx={{ mr: 2, backgroundColor: '#1c3e3c' }}
           >
             <ArrowBackIosNewIcon fontSize='small' />
@@ -29,7 +30,8 @@ const Navbar = () => {
             size='small'
             edge='start'
             color='white'
-            sx={{ mr: 2, backgroundColor: '#000', opacity: '0.5' }}
+            disableRipple
+            sx={{ mr: 2, backgroundColor: '#1c3e3c' }}
           >
             <ArrowForwardIosIcon fontSize='small' />
           </IconButton>

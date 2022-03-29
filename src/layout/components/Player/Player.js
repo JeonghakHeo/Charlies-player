@@ -61,13 +61,13 @@ const Player = () => {
             textAlign: 'center',
             display: 'flex',
             alignItems: 'center',
-            transform: 'translateX(24.5%)',
+            transform: 'translateX(21%)',
           }}
         >
-          <ShuffleIcon color='primary' fontSize='medium' />
-          <SkipPreviousIcon color='secondary' fontSize='large' />
-          <PlayCircleIcon color='white' sx={{ fontSize: 45 }} />
-          <SkipNextIcon color='secondary' fontSize='large' />
+          <ShuffleIcon color='primary' fontSize='medium' sx={{ mr: 1 }} />
+          <SkipPreviousIcon color='secondary' fontSize='large' sx={{ mr: 1 }} />
+          <PlayCircleIcon color='white' sx={{ fontSize: 45, mr: 1 }} />
+          <SkipNextIcon color='secondary' fontSize='large' sx={{ mr: 1 }} />
           <RepeatIcon color='primary' fontSize='medium' />
         </Box>
 
@@ -92,7 +92,7 @@ const Player = () => {
       <Box
         sx={{
           backgroundColor: '',
-          padding: '20px',
+          padding: '20px 40px 20px 20px',
           width: '30%',
           height: '50px',
           display: 'flex',
@@ -106,7 +106,7 @@ const Player = () => {
           defaultValue={50}
           color='secondary'
           size='small'
-          sx={{ margin: '0 10px' }}
+          sx={{ margin: '0 10px', width: '20%' }}
         />
         <OpenInFullIcon color='secondary' size='small' />
       </Box>

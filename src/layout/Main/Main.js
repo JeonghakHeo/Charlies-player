@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import './Main.css'
 import Spinner from '../../utils/Spinner'
-import Navbar from '../Navbar/Navbar'
-import PlaylistInfo from '../PlaylistInfo/PlaylistInfo'
-import Playlists from '../Playlists/Playlists'
-import Player from '../Player/Player'
+import Navbar from '../components/Navbar/Navbar'
+import PlaylistInfo from '../components/PlaylistInfo/PlaylistInfo'
+import Playlists from '../components/Playlists/Playlists'
+import Player from '../components/Player/Player'
 
 const Main = ({ token }) => {
   const [loading, setLoading] = useState(false)
@@ -28,6 +28,14 @@ const Main = ({ token }) => {
               <Playlists />
             </div>
             <div className='player'>
+              <hr
+                className='divider'
+                style={{
+                  position: 'absolute',
+                  top: '0px',
+                  transform: 'translate(-20px, -9px)',
+                }}
+              />
               <Player />
             </div>
           </div>

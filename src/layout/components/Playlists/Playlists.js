@@ -1,6 +1,6 @@
 import './Playlists.css'
 import React, { useState } from 'react'
-// import { makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -15,11 +15,30 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
-// const useStyle = makeStyles({
-//   container: {
-//     backgroundColor: 'pink',
-//   },
-// })
+const useStyle = makeStyles({
+  active: {
+    backgroundColor: '#2a2a2a',
+    borderRadius: '5px',
+  },
+  play: {
+    '&:hover': {
+      transform: 'scale(105%)',
+    },
+    '&:active': {
+      opacity: '0.8',
+    },
+  },
+  icon: {
+    '&:hover': {
+      color: '#fff',
+    },
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#fff',
+    },
+  },
+})
 
 const data = [
   {
@@ -95,7 +114,7 @@ const data = [
 ]
 
 const Playlists = () => {
-  // const classes = useStyle()
+  const classes = useStyle()
 
   const [value, setValue] = useState('')
   const handleChange = (event) => {
@@ -121,13 +140,22 @@ const Playlists = () => {
                 alignItems: 'center',
               }}
             >
-              <PlayCircleIcon color='primary' sx={{ fontSize: '70px' }} />
+              <PlayCircleIcon
+                color='primary'
+                sx={{ fontSize: '70px' }}
+                className={classes.play}
+              />
               <FavoriteIcon color='primary' sx={{ fontSize: '40px' }} />
               <ArrowCircleDownIcon
                 color='secondary'
                 sx={{ fontSize: '40px' }}
+                className={classes.icon}
               />
-              <MoreHorizIcon color='secondary' sx={{ fontSize: '40px' }} />
+              <MoreHorizIcon
+                color='secondary'
+                sx={{ fontSize: '40px' }}
+                className={classes.icon}
+              />
             </Box>
           </Grid>
           <Grid item xs={10}>
@@ -139,9 +167,8 @@ const Playlists = () => {
                 alingItems: 'center',
               }}
             >
-              {/* css hover */}
-              <IconButton>
-                <SearchIcon color='white' />
+              <IconButton disableRipple>
+                <SearchIcon color='secondary' className={classes.iconButton} />
               </IconButton>
               <FormControl sx={{ m: 1, minWidth: 100 }}>
                 <Select
@@ -172,7 +199,7 @@ const Playlists = () => {
           container
           justifyContent='space-between'
           alignItems='center'
-          sx={{ backgroundColor: '', padding: '10px' }}
+          sx={{ backgroundColor: 'purple', padding: '10px' }}
         >
           <Grid
             item
@@ -213,15 +240,7 @@ const Playlists = () => {
         </Grid>
 
         {/* divider */}
-        <hr
-          style={{
-            borderTop: '1px solid transparent',
-            marginTop: '4px',
-            opacity: '0.1',
-            boxShadow:
-              'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
-          }}
-        />
+        <hr className='divider' style={{ marginTop: '4px' }} />
 
         {/* Each song */}
         {data.map((info) => (
@@ -262,14 +281,14 @@ const Playlists = () => {
           </Box>
         ))}
 
-        {/* <Grid
+        <Grid
           container
           justifyContent='space-between'
+          alignItems='center'
           sx={{
-            backgroundColor: '#2a2a2a',
-            borderRadius: '5px',
             padding: '20px 0px',
           }}
+          className={classes.active}
         >
           <Grid
             item
@@ -278,7 +297,7 @@ const Playlists = () => {
               textAlign: 'center',
             }}
           >
-            <Typography variant='subtitle1'>1</Typography>
+            <Typography variant='subtitle1'>14</Typography>
           </Grid>
           <Grid item xs={5}>
             <Typography variant='body1'>Shake The Tree</Typography>
@@ -292,7 +311,7 @@ const Playlists = () => {
           <Grid item xs={0.5} sx={{ textAlign: 'center' }}>
             <Typography variant='subtitle1'>3:03</Typography>
           </Grid>
-        </Grid> */}
+        </Grid>
       </Box>
 
       {/* </Box> */}
