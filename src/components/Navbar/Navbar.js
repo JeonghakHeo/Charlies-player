@@ -13,9 +13,8 @@ const Navbar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position='sticky'
         color='transparent'
-        sx={{ boxShadow: 'none', paddingLeft: '20px', paddingRight: '20px' }}
+        sx={{ boxShadow: 'none', padding: '0px 20px' }}
       >
         <Toolbar>
           <IconButton

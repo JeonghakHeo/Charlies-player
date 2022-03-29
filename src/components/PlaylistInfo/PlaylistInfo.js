@@ -37,7 +37,13 @@ const PlaylistDescription = () => {
                 sx={{ width: '30px', height: '30px', marginRight: '5px' }}
               />
               <Typography variant='h4'>
-                Mellisa Gutierrez • 51 likes • 236 songs, 14h 1m
+                Mellisa Gutierrez{' '}
+                <span style={{ fontWeight: 'normal' }}>
+                  • 51 likes • 236 songs,{' '}
+                </span>
+                <span style={{ color: '#b2b2b2', fontWeight: 'normal' }}>
+                  14 hr 1 min
+                </span>
               </Typography>
             </Box>
           </Box>
