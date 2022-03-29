@@ -79,63 +79,14 @@ const data = [
     duration: '3.03',
   },
   {
+    id: 8,
+    title: 'Shake The Tree',
+    album: 'Shake The Tree',
+    dataAdded: 'Feb 11, 2019',
+    duration: '3.03',
+  },
+  {
     id: 9,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 10,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 11,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 12,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 13,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 14,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 15,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 16,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 17,
     title: 'Shake The Tree',
     album: 'Shake The Tree',
     dataAdded: 'Feb 11, 2019',
@@ -274,73 +225,76 @@ const Playlists = () => {
 
         {/* Each song */}
         {data.map((info) => (
-          <Grid
-            className='song'
-            key={info.id}
-            container
-            justifyContent='space-between'
-            alignItems='center'
-            sx={{ backgroundColor: '', padding: '20px 10px' }}
-          >
+          <Box className='song'>
             <Grid
-              item
-              xs={0.5}
+              key={info.id}
+              container
+              justifyContent='space-between'
+              alignItems='center'
               sx={{
-                textAlign: 'center',
+                // backgroundColor: '#2a2a2a',
+                // borderRadius: '5px',
+                padding: '20px 10px',
               }}
             >
-              <Typography variant='subtitle1'>{info.id}</Typography>
+              <Grid
+                item
+                xs={0.5}
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                <Typography variant='subtitle1'>{info.id}</Typography>
+              </Grid>
+              <Grid item xs={5}>
+                <Typography variant='body1'>Shake The Tree</Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant='body1'>Shake The Tree</Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant='subtitle1'>Feb 11, 2019</Typography>
+              </Grid>
+              <Grid item xs={0.5} sx={{ textAlign: 'center' }}>
+                <Typography variant='subtitle1'>3:03</Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={5}>
-              <Typography variant='body1'>Shake The Tree</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant='subtitle1'>Shake The Tree</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant='subtitle1'>Feb 11, 2019</Typography>
-            </Grid>
-            <Grid item xs={0.5} sx={{ textAlign: 'center' }}>
-              <Typography variant='subtitle1'>3:03</Typography>
-            </Grid>
-          </Grid>
+          </Box>
         ))}
 
         {/* <Grid
-            container
-            justifyContent='space-between'
-            sx={{ backgroundColor: 'purple', padding: '20px 0px' }}
+          container
+          justifyContent='space-between'
+          sx={{
+            backgroundColor: '#2a2a2a',
+            borderRadius: '5px',
+            padding: '20px 0px',
+          }}
+        >
+          <Grid
+            item
+            xs={0.5}
+            sx={{
+              textAlign: 'center',
+            }}
           >
-            <Grid
-              item
-              xs={0.5}
-              sx={{
-                textAlign: 'center',
-              }}
-            >
-              2
-            </Grid>
-            <Grid item xs={5}>
-              We Don't Give A
-            </Grid>
-            <Grid item xs={3}>
-              For All We Know
-            </Grid>
-            <Grid item xs={3}>
-              Feb 11, 2019
-            </Grid>
-            <Grid item xs={0.5} sx={{ textAlign: 'center' }}>
-              3:21
-            </Grid>
-          </Grid> */}
+            <Typography variant='subtitle1'>1</Typography>
+          </Grid>
+          <Grid item xs={5}>
+            <Typography variant='body1'>Shake The Tree</Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography variant='subtitle1'>Shake The Tree</Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography variant='subtitle1'>Feb 11, 2019</Typography>
+          </Grid>
+          <Grid item xs={0.5} sx={{ textAlign: 'center' }}>
+            <Typography variant='subtitle1'>3:03</Typography>
+          </Grid>
+        </Grid> */}
       </Box>
 
-      {/* Bottom Sticky bar */}
-      <div className='asd'>
-        <a href='#home' className='active'>
-          AlbumCover
-        </a>
-      </div>
       {/* </Box> */}
     </>
   )

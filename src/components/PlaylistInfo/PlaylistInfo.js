@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import AlbumCover from '../PlaylistCover/PlaylistCover'
+import PlaylistCover from '../PlaylistCover/PlaylistCover'
 import logo from './logo.png'
 
 const PlaylistDescription = () => {
@@ -12,7 +12,7 @@ const PlaylistDescription = () => {
       <Grid container sx={{ height: '100%' }}>
         <Grid item xs={2} sx={{ width: '100%' }}>
           <Box sx={{ width: '100%', height: '100%' }}>
-            <AlbumCover />
+            <PlaylistCover />
           </Box>
         </Grid>
 

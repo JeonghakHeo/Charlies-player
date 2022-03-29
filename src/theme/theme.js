@@ -44,6 +44,14 @@ const theme = createTheme({
       color: '#b2b2b2',
       fontSize: '1rem',
     },
+    body2: {
+      color: '#fff',
+      fontSize: '0.9rem',
+    },
+    subtitle2: {
+      color: '#b2b2b2',
+      fontSize: '0.7rem',
+    },
   },
 })
 
