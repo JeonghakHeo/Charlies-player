@@ -1,18 +1,24 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import PlaylistCover from '../PlaylistCover/PlaylistCover'
-import logo from './logo.png'
 
-const PlaylistDescription = () => {
+const PlaylistInfo = () => {
+  const playlist = useSelector((state) => state.playlist)
+  const { playlistInfo } = playlist
+
+  const artist = useSelector((state) => state.artist)
+  const { artistInfo } = artist
+
   return (
     <>
       <Grid container sx={{ height: '100%' }}>
         <Grid item xs={2} sx={{ width: '100%' }}>
           <Box sx={{ width: '100%', height: '100%' }}>
-            <PlaylistCover />
+            <PlaylistCover image={playlistInfo?.images[0]?.url} />
           </Box>
         </Grid>
 
@@ -26,20 +32,23 @@ const PlaylistDescription = () => {
               justifyContent: 'flex-end',
             }}
           >
-            <Typography variant='h4'>PUBLIC PLAYLIST</Typography>
+            <Typography variant='h4'>
+              {playlistInfo?.public ? 'PUBLIC PLAYLIST' : 'PRIVATE PLAYLIST'}
+            </Typography>
 
             <Typography variant='h1' component='h1'>
-              I FEEL DEAM GOOD!
+              {playlistInfo?.name}
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Avatar
-                src={logo}
+                src={artistInfo?.images[0]?.url}
                 sx={{ width: '30px', height: '30px', marginRight: '5px' }}
               />
               <Typography variant='h4'>
-                Mellisa Gutierrez{' '}
+                {playlistInfo?.owner?.display_name}{' '}
                 <span style={{ fontWeight: 'normal' }}>
-                  • 51 likes • 236 songs,{' '}
+                  • {playlistInfo?.followers?.total} likes •{' '}
+                  {playlistInfo?.tracks?.total} songs,{' '}
                 </span>
                 <span style={{ color: '#b2b2b2', fontWeight: 'normal' }}>
                   14 hr 1 min
@@ -53,4 +62,4 @@ const PlaylistDescription = () => {
   )
 }
 
-export default PlaylistDescription
+export default PlaylistInfo

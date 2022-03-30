@@ -1,12 +1,15 @@
 import './Login.css'
 import Button from '@mui/material/Button'
 
+const getRedirectUrl = () => {
+  console.log('click')
+}
+
 const Login = () => {
   return (
     <div className='login'>
       <Button
         variant='contained'
-        // onClick={getRedirectUrl}
         sx={{
           backgroundColor: '#1DB954',
           color: '#000',
@@ -15,6 +18,7 @@ const Login = () => {
             backgroundColor: '#1ED760',
           },
         }}
+        onClick={getRedirectUrl}
       >
         Login with Spotify
       </Button>

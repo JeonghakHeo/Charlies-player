@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import './Main.css'
-import Spinner from '../../utils/Spinner'
+import Spinner from '../components/Spinner/Spinner'
 import Navbar from '../components/Navbar/Navbar'
 import PlaylistInfo from '../components/PlaylistInfo/PlaylistInfo'
 import Playlists from '../components/Playlists/Playlists'
 import Player from '../components/Player/Player'
+import { getPlaylistInfo, getArtistInfo } from '../../redux/actions/actions'
 
 const Main = ({ token }) => {
   const [loading, setLoading] = useState(false)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getPlaylistInfo())
+    dispatch(getArtistInfo())
+  }, [dispatch])
 
   return (
     <>
@@ -17,9 +27,9 @@ const Main = ({ token }) => {
         <>
           <div className='playlist'>
             <div className='playlist-info'>
-              <navbar className='navbar'>
+              <nav className='navbar'>
                 <Navbar />
-              </navbar>
+              </nav>
               <div className='playlist-details'>
                 <PlaylistInfo />
               </div>
