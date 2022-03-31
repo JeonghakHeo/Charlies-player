@@ -44,7 +44,7 @@ const connectPlayer = (token) => async (dispatch) => {
       })
 
       player.connect()
-      dispatch({ type: CONNECT_PLAYER_SUCCESS })
+      dispatch({ type: CONNECT_PLAYER_SUCCESS, payload: true })
 
       player.addListener('player_state_changed', (state) => {
         if (!state) {

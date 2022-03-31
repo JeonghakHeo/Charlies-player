@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { SET_SHUFFLE } from '../constants/playerConstants'
 import {
   GET_PLAYLIST_REQUEST,
   GET_PLAYLIST_SUCCESS,
@@ -53,4 +54,9 @@ export const getArtistInfo = () => async (dispatch) => {
     dispatch({ type: GET_ARTIST_FAIL })
     console.log(error)
   }
+}
+
+export const toggleShuffle = () => async (dispatch, getState) => {
+  try {
+  } catch (error) {}
 }

@@ -1,11 +1,12 @@
 import './Playlists.css'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@mui/styles'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle'
+import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
@@ -16,6 +17,8 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import PlaylistCover from '../PlaylistCover/PlaylistCover'
+import { SET_PAUSE } from '../../../redux/constants/playerConstants'
+
 import moment from 'moment'
 
 const useStyle = makeStyles({
@@ -43,113 +46,25 @@ const useStyle = makeStyles({
   },
 })
 
-const data = [
-  {
-    id: 1,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 2,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 3,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 4,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 5,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 6,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 7,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-
-  {
-    id: 8,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 9,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 10,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 11,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 12,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 13,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-  {
-    id: 14,
-    title: 'Shake The Tree',
-    album: 'Shake The Tree',
-    dataAdded: 'Feb 11, 2019',
-    duration: '3.03',
-  },
-]
-
 const Playlists = () => {
   const classes = useStyle()
 
   const playlist = useSelector((state) => state.playlist)
   const { playlistInfo, loading } = playlist
+
+  const player = useSelector((state) => state.player)
+  const { playerController, isPaused } = player.player
+
+  const dispatch = useDispatch()
+
+  const togglePlay = () => {
+    playerController.togglePlay()
+    if (isPaused) {
+      dispatch({ type: SET_PAUSE, payload: false })
+    } else {
+      dispatch({ type: SET_PAUSE, payload: true })
+    }
+  }
 
   const tracks = playlistInfo?.tracks?.items?.slice(0, 12)
 
@@ -183,11 +98,22 @@ const Playlists = () => {
                 alignItems: 'center',
               }}
             >
-              <PlayCircleIcon
-                color='primary'
-                sx={{ fontSize: '70px' }}
-                className={classes.play}
-              />
+              {isPaused ? (
+                <PlayCircleIcon
+                  color='primary'
+                  sx={{ fontSize: '70px' }}
+                  className={classes.play}
+                  onClick={togglePlay}
+                />
+              ) : (
+                <PauseCircleIcon
+                  color='primary'
+                  sx={{ fontSize: '70px' }}
+                  className={classes.play}
+                  onClick={togglePlay}
+                />
+              )}
+
               <FavoriteIcon color='primary' sx={{ fontSize: '40px' }} />
               <ArrowCircleDownIcon
                 color='secondary'

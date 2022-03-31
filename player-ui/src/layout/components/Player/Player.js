@@ -1,4 +1,6 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { makeStyles } from '@mui/styles'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Slider from '@mui/material/Slider'
@@ -14,8 +16,61 @@ import MenuIcon from '@mui/icons-material/Menu'
 import QueueMusicIcon from '@mui/icons-material/QueueMusic'
 import VolumeDownIcon from '@mui/icons-material/VolumeDown'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
+import { SET_PAUSE } from '../../../redux/constants/playerConstants'
+
+const useStyle = makeStyles({
+  play: {
+    '&:hover': {
+      transform: 'scale(105%)',
+    },
+  },
+  icon: {
+    '&:hover': {
+      color: '#fff',
+    },
+  },
+  active: {
+    color: '#1DB954',
+  },
+})
 
 const Player = () => {
+  const classes = useStyle()
+
+  const player = useSelector((state) => state.player)
+  const { playerController, playerState, currentTrack, isPaused } =
+    player.player
+
+  const dispatch = useDispatch()
+
+  const togglePlay = () => {
+    playerController.togglePlay()
+    if (isPaused) {
+      dispatch({ type: SET_PAUSE, payload: false })
+    } else {
+      dispatch({ type: SET_PAUSE, payload: true })
+    }
+  }
+
+  const playPreviousTrack = () => {
+    playerController.previousTrack()
+  }
+
+  const playNextTrack = () => {
+    playerController.nextTrack()
+  }
+
+  const toggleShuffle = () => {
+    // dispatch({type: SET_SHUFFLE })
+    console.log('shuffle')
+  }
+
+  const formatDuration = (duration) => {
+    const minutes = Math.floor(duration / 60000)
+    const seconds = ((duration % 60000) / 1000).toFixed(0)
+    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
+  }
+
   return (
     <>
       <Box
@@ -32,17 +87,19 @@ const Player = () => {
             marginRight: '15px',
             height: '60px',
             width: '60px',
-            backgroundColor: 'purple',
+            backgroundColor: '',
           }}
         >
-          <PlaylistCover />
+          <PlaylistCover image={currentTrack?.album.images[0]?.url} />
         </Box>
         <Box sx={{ marginRight: '25px' }}>
-          <Typography variant='body2'>You're On (feat. Kyan)</Typography>
-          <Typography variant='subtitle2'>Madeon, Kyan</Typography>
+          <Typography variant='body2'>{currentTrack?.name}</Typography>
+          <Typography variant='subtitle2'>
+            {currentTrack?.artists.map((artist) => artist.name)}
+          </Typography>
         </Box>
         <Box>
-          <FavoriteBorderIcon color='secondary' />
+          <FavoriteBorderIcon color='secondary' className={classes.icon} />
         </Box>
       </Box>
       <Box
@@ -64,11 +121,56 @@ const Player = () => {
             transform: 'translateX(21%)',
           }}
         >
-          <ShuffleIcon color='primary' fontSize='medium' sx={{ mr: 1 }} />
-          <SkipPreviousIcon color='secondary' fontSize='large' sx={{ mr: 1 }} />
-          <PlayCircleIcon color='white' sx={{ fontSize: 45, mr: 1 }} />
-          <SkipNextIcon color='secondary' fontSize='large' sx={{ mr: 1 }} />
-          <RepeatIcon color='primary' fontSize='medium' />
+          <ShuffleIcon
+            color='secondary'
+            className={classes.icon}
+            fontSize='medium'
+            sx={{ mr: 1 }}
+            onClick={toggleShuffle}
+          />
+          <SkipPreviousIcon
+            color='secondary'
+            className={classes.icon}
+            fontSize='large'
+            sx={{ mr: 1 }}
+            onClick={playPreviousTrack}
+          />
+          {isPaused ? (
+            <PlayCircleIcon
+              color='white'
+              className={classes.play}
+              sx={{
+                fontSize: 45,
+                mr: 1,
+              }}
+              onClick={togglePlay}
+            />
+          ) : (
+            <PauseCircleIcon
+              color='white'
+              className={classes.play}
+              sx={{
+                fontSize: 45,
+                mr: 1,
+                '&:hover': {
+                  transform: 'scale(105%)',
+                },
+              }}
+              onClick={togglePlay}
+            />
+          )}
+          <SkipNextIcon
+            color='secondary'
+            className={classes.icon}
+            fontSize='large'
+            sx={{ mr: 1 }}
+            onClick={playNextTrack}
+          />
+          <RepeatIcon
+            color='secondary'
+            className={classes.icon}
+            fontSize='medium'
+          />
         </Box>
 
         <Box
@@ -79,14 +181,18 @@ const Player = () => {
             alignItems: 'center',
           }}
         >
-          <Typography variant='subtitle2'>1:16</Typography>
+          <Typography variant='subtitle2'>
+            {formatDuration(playerState.position)}
+          </Typography>
           <Slider
             defaultValue={50}
             color='secondary'
             size='small'
             sx={{ margin: '0 10px' }}
           />
-          <Typography variant='subtitle2'>3:12</Typography>
+          <Typography variant='subtitle2'>
+            {formatDuration(playerState.duration - playerState.position)}
+          </Typography>
         </Box>
       </Box>
       <Box
@@ -100,15 +206,23 @@ const Player = () => {
           alignItems: 'center',
         }}
       >
-        <QueueMusicIcon color='secondary' />
-        <VolumeDownIcon color='secondary' />
+        <QueueMusicIcon
+          color='secondary'
+          className={classes.icon}
+          sx={{ mr: 1 }}
+        />
+        <VolumeDownIcon color='secondary' className={classes.icon} />
         <Slider
           defaultValue={50}
           color='secondary'
           size='small'
           sx={{ margin: '0 10px', width: '20%' }}
         />
-        <OpenInFullIcon color='secondary' size='small' />
+        <OpenInFullIcon
+          color='secondary'
+          size='small'
+          className={classes.icon}
+        />
       </Box>
     </>
   )

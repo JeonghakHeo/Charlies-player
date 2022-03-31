@@ -52,6 +52,35 @@ export const getArtist = async (req, res) => {
   }
 }
 
+// @desc    Update shuffle
+// @route   PUT /api/spotify/shuffle/:state
+// @access  Private
+export const updateShuffle = async (req, res) => {
+  const state = req.params.state
+  const token = req.headers.authorization
+
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/shuffle?state=${state}`,
+      {},
+      config
+    )
+
+    if (state === 'true') {
+      return res.send(true)
+    } else if (state === 'false') return res.send(false)
+  } catch (error) {
+    res.json(error)
+  }
+}
+
 // *************************************************** //
 
 // @desc    Get users top artists
@@ -104,35 +133,6 @@ export const setTrack = async (req, res) => {
     res.status(200).json({ success: true })
   } catch (error) {
     console.log(error)
-  }
-}
-
-// @desc    Update shuffle
-// @route   PUT /api/spotify/shuffle/:state
-// @access  Private
-export const updateShuffle = async (req, res) => {
-  const state = req.params.state
-  const token = req.headers.authorization
-
-  try {
-    const config = {
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-      },
-    }
-
-    await axios.put(
-      `https://api.spotify.com/v1/me/player/shuffle?state=${state}`,
-      {},
-      config
-    )
-
-    if (state === 'true') {
-      return res.send(true)
-    } else if (state === 'false') return res.send(false)
-  } catch (error) {
-    res.json(error)
   }
 }
 

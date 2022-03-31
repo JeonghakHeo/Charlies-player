@@ -15,7 +15,7 @@ const initialState = {
   loading: false,
   isConnected: false,
   player: {
-    playerInfo: {},
+    playerController: {},
     isPaused: true,
     isActive: false,
     currentTrack: {},
@@ -37,7 +37,7 @@ export const playerReducer = (state = initialState, action) => {
         loading: false,
         player: {
           ...state.player,
-          playerInfo: action.payload,
+          playerController: action.payload,
         },
       }
 
