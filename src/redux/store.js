@@ -2,8 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { playlistReducer, artistReducer } from './reducers/spotifyReducer'
+import { playerReducer } from './reducers/playerReducer'
 
 const reducer = combineReducers({
+  player: playerReducer,
   playlist: playlistReducer,
   artist: artistReducer,
 })

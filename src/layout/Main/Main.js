@@ -1,6 +1,5 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import './Main.css'
 import Spinner from '../components/Spinner/Spinner'
 import Navbar from '../components/Navbar/Navbar'
@@ -10,7 +9,11 @@ import Player from '../components/Player/Player'
 import { getPlaylistInfo, getArtistInfo } from '../../redux/actions/actions'
 
 const Main = ({ token }) => {
-  const [loading, setLoading] = useState(false)
+  const playlist = useSelector((state) => state.playlist)
+  const { loading: playlistLoding } = playlist
+
+  const artist = useSelector((state) => state.artist)
+  const { loading: artistLoading } = artist
 
   const dispatch = useDispatch()
 
@@ -21,7 +24,7 @@ const Main = ({ token }) => {
 
   return (
     <>
-      {loading ? (
+      {playlistLoding && artistLoading ? (
         <Spinner />
       ) : (
         <>

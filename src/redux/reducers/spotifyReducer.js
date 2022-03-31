@@ -5,7 +5,7 @@ import {
   GET_ARTIST_REQUEST,
   GET_ARTIST_SUCCESS,
   GET_ARTIST_FAIL,
-} from '../constants/actionConstants'
+} from '../constants/spotifyConstants'
 
 export const playlistReducer = (state = {}, action) => {
   switch (action.type) {

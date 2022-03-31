@@ -1,11 +1,16 @@
+import axios from 'axios'
 import './App.css'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button'
 import Main from './layout/Main/Main'
 import Login from './layout/Login/Login'
 import Spinner from './layout/components/Spinner/Spinner'
-import axios from 'axios'
+import connectPlayer from './redux/actions/connectPlayer'
+
 const App = () => {
+  const dispatch = useDispatch()
+
   const [token, setToken] = useState(null)
   const loading = false
   const params = new URLSearchParams(window.location.search)
@@ -30,7 +35,7 @@ const App = () => {
 
   const getRedirectUrl = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/auth/login')
+      const { data } = await axios.get('/api/auth/login')
       window.location.replace(data.redirectUrl)
     } catch (error) {
       console.log(error)
@@ -59,7 +64,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    // connect player
+    dispatch(connectPlayer(JSON.parse(localStorage.getItem('token'))))
   })
 
   return (

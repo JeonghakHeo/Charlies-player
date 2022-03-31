@@ -152,7 +152,6 @@ const Playlists = () => {
   const { playlistInfo, loading } = playlist
 
   const tracks = playlistInfo?.tracks?.items?.slice(0, 12)
-  console.log(tracks)
 
   const formatDuration = (duration) => {
     const minutes = Math.floor(duration / 60000)
