@@ -1,0 +1,18 @@
+player {
+  loading: false,
+  isConnected: false,
+  player: {
+    isPaused: true,
+    isActive: false,
+    currentTrack: {}
+    playerState: {}
+  },
+}
+
+
+track.album.images[0].url
+track.name
+track.artists[index].name
+track.album.name
+track.added_at
+track.duration
