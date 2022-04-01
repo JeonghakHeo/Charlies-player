@@ -49,29 +49,33 @@ const useStyle = makeStyles({
 const Playlists = () => {
   const classes = useStyle()
 
+  const dispatch = useDispatch()
+
   const playlist = useSelector((state) => state.playlist)
   const { playlistInfo, loading } = playlist
 
   const player = useSelector((state) => state.player)
-  const { playerController, isPaused } = player.player
+  const { playerController, playerState } = player
 
-  const dispatch = useDispatch()
+  const tracks = playlistInfo?.tracks?.items?.slice(0, 12)
 
   const togglePlay = () => {
     playerController.togglePlay()
-    if (isPaused) {
+    if (playerState?.paused) {
       dispatch({ type: SET_PAUSE, payload: false })
     } else {
       dispatch({ type: SET_PAUSE, payload: true })
     }
   }
 
-  const tracks = playlistInfo?.tracks?.items?.slice(0, 12)
-
   const formatDuration = (duration) => {
     const minutes = Math.floor(duration / 60000)
     const seconds = ((duration % 60000) / 1000).toFixed(0)
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
+  }
+
+  const formatDate = (addedAt) => {
+    return moment.utc(addedAt).format('MMM D, YYYY')
   }
 
   const [value, setValue] = useState('')
@@ -98,7 +102,7 @@ const Playlists = () => {
                 alignItems: 'center',
               }}
             >
-              {isPaused ? (
+              {playerState?.paused ? (
                 <PlayCircleIcon
                   color='primary'
                   sx={{ fontSize: '70px' }}
@@ -249,7 +253,6 @@ const Playlists = () => {
                     xs={5}
                     sx={{ display: 'flex', alignItems: 'center' }}
                   >
-                    {/* <Typography variant='body1'>{track?.name}</Typography> */}
                     <Box
                       sx={{
                         marginRight: '15px',
@@ -280,7 +283,7 @@ const Playlists = () => {
                   </Grid>
                   <Grid item xs={3}>
                     <Typography variant='subtitle1'>
-                      {track?.added_at}
+                      {formatDate(track?.added_at)}
                     </Typography>
                   </Grid>
                   <Grid item xs={0.5} sx={{ textAlign: 'center' }}>

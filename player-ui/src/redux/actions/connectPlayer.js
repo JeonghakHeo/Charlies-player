@@ -11,8 +11,11 @@ import {
   SET_ACTIVE,
 } from '../constants/playerConstants'
 
-const connectPlayer = (token) => async (dispatch) => {
+const connectPlayer = (token) => async (dispatch, getState) => {
   try {
+    // const { playerState } = getState().player
+    // console.log('playerState: ', playerState)
+
     dispatch({ type: SET_PLAYER_REQUEST })
 
     const script = document.createElement('script')
@@ -55,6 +58,7 @@ const connectPlayer = (token) => async (dispatch) => {
           type: SET_TRACK,
           payload: state.track_window.current_track,
         })
+
         dispatch({ type: SET_PAUSE, payload: state.paused })
 
         player.getCurrentState().then((state) => {

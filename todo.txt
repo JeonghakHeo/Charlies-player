@@ -1,5 +1,10 @@
 featuring artists
-data added format
+shuffle
+repeat
+volume
+
 
 clean up trees
-moment().format("MMM Do YY"); // Mar 30th 22
+
+196567ms === 3:16 // Math.floor(196567) === 196 value
+0:00 4:02 // 242 value

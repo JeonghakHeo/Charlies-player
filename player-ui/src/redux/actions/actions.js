@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { SET_SHUFFLE } from '../constants/playerConstants'
 import {
   GET_PLAYLIST_REQUEST,
   GET_PLAYLIST_SUCCESS,
@@ -8,6 +7,11 @@ import {
   GET_ARTIST_SUCCESS,
   GET_ARTIST_FAIL,
 } from '../constants/spotifyConstants'
+import {
+  TOGGLE_SHUFFLE_REQUEST,
+  TOGGLE_SHUFFLE_SUCCESS,
+  TOGGLE_SHUFFLE_FAIL,
+} from '../constants/playerConstants'
 
 export const getPlaylistInfo = () => async (dispatch) => {
   try {
@@ -58,5 +62,37 @@ export const getArtistInfo = () => async (dispatch) => {
 
 export const toggleShuffle = () => async (dispatch, getState) => {
   try {
-  } catch (error) {}
+    const token = JSON.parse(localStorage.getItem('token'))
+    const { playerState } = getState().player
+
+    console.log(playerState.shuffle)
+
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     'Content-Type': 'application/json',
+    //   },
+    // }
+
+    // if (isShuffle === false) {
+    //   const { data } = await axios.put(
+    //     `/api/spotify/shuffle/${!isShuffle}`,
+    //     {},
+    //     config
+    //   )
+    //   dispatch({ type: TOGGLE_SHUFFLE_SUCCESS, payload: data })
+    // }
+
+    // if (isShuffle === true) {
+    //   const { data } = await axios.put(
+    //     `/api/spotify/shuffle/${!isShuffle}`,
+    //     {},
+    //     config
+    //   )
+    //   dispatch({ type: TOGGLE_SHUFFLE_SUCCESS, payload: data })
+    // }
+  } catch (error) {
+    // dispatch({ type: TOGGLE_SHUFFLE_FAIL, payload: error })
+    // console.log(error)
+  }
 }

@@ -9,18 +9,30 @@ import {
   SET_PAUSE,
   SET_PLAYER_STATE,
   SET_ACTIVE,
+  TOGGLE_SHUFFLE_REQUEST,
+  TOGGLE_SHUFFLE_SUCCESS,
+  TOGGLE_SHUFFLE_FAIL,
 } from '../constants/playerConstants'
 
 const initialState = {
   loading: false,
   isConnected: false,
-  player: {
-    playerController: {},
-    isPaused: true,
-    isActive: false,
-    currentTrack: {},
-    playerState: {},
+  isActive: false,
+  playerController: {},
+  currentTrack: {
+    name: 'Shake The Tree',
+    artists: [
+      { name: 'Simon Field', uri: 'spotify:artist:2S0tj8IQ2ytFKa5HdCni57' },
+    ],
+    album: {
+      images: [
+        {
+          url: 'https://i.scdn.co/image/ab67616d0000b273df757641bb992e0ce6423473',
+        },
+      ],
+    },
   },
+  playerState: { duration: 184419, position: 0, paused: true },
 }
 
 export const playerReducer = (state = initialState, action) => {
@@ -35,10 +47,7 @@ export const playerReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        player: {
-          ...state.player,
-          playerController: action.payload,
-        },
+        playerController: action.payload,
       }
 
     case CONNECT_PLAYER_REQUEST:
@@ -58,38 +67,30 @@ export const playerReducer = (state = initialState, action) => {
     case SET_TRACK:
       return {
         ...state,
-        player: {
-          ...state.player,
-          currentTrack: action.payload,
-        },
+        currentTrack: action.payload,
       }
 
     case SET_PAUSE:
       return {
         ...state,
-        player: {
-          ...state.player,
-          isPaused: action.payload,
+        playerState: {
+          ...state.playerState,
+          paused: action.payload,
         },
       }
 
     case SET_PLAYER_STATE:
       return {
         ...state,
-        player: {
-          ...state.player,
-          playerState: action.payload,
-        },
+        playerState: action.payload,
       }
 
     case SET_ACTIVE:
       return {
         ...state,
-        player: {
-          ...state.player,
-          isActive: action.payload,
-        },
+        isActive: action.payload,
       }
+
     default:
       return state
   }
