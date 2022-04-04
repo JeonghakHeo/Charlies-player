@@ -8,9 +8,9 @@ import {
   GET_ARTIST_FAIL,
 } from '../constants/spotifyConstants'
 import {
-  TOGGLE_SHUFFLE_REQUEST,
-  TOGGLE_SHUFFLE_SUCCESS,
-  TOGGLE_SHUFFLE_FAIL,
+  PLAY_SONG_REQUEST,
+  PLAY_SONG_SUCCESS,
+  PLAY_SONG_FAIL,
 } from '../constants/playerConstants'
 
 export const getPlaylistInfo = () => async (dispatch) => {
@@ -59,6 +59,43 @@ export const getArtistInfo = () => async (dispatch) => {
     console.log(error)
   }
 }
+
+export const playSong = (positionMs) => async (dispatch) => {
+  try {
+    dispatch({ type: PLAY_SONG_REQUEST })
+
+    const token = JSON.parse(localStorage.getItem('token'))
+    const deviceId = JSON.parse(localStorage.getItem('deviceId'))
+
+    const body = {
+      context_uri: 'spotify:playlist:1H8NiwW6ogBH2bSfBKY0EN',
+      offset: {
+        position: 0,
+      },
+      position_ms: positionMs * 1000,
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.put(
+      `/api/spotify/player/${deviceId}`,
+      body,
+      config
+    )
+
+    dispatch({ type: PLAY_SONG_SUCCESS })
+  } catch (error) {
+    dispatch({ type: PLAY_SONG_FAIL })
+    console.log(error)
+  }
+}
+
+// **************************************************************** //
 
 export const toggleShuffle = () => async (dispatch, getState) => {
   try {

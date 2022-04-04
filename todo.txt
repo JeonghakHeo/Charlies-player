@@ -3,8 +3,26 @@ shuffle
 repeat
 volume
 
-
 clean up trees
+
+
+
 
 196567ms === 3:16 // Math.floor(196567) === 196 value
 0:00 4:02 // 242 value
+
+
+
+let position 
+const timer = setInterval(() => {
+  position++
+  
+  if (position === duration) {
+    clearInterval(timer)
+  }
+}, 1)
+
+
+
+press start -> increase position by 1 ->                                                      -> if position = duration then clear interval
+                                          (when player stops, stop increaseing position by 1)

@@ -52,6 +52,36 @@ export const getArtist = async (req, res) => {
   }
 }
 
+// @desc    Set track
+// @route   PUT /api/spotify/player/:deviceId
+// @access  Private
+export const setTrack = async (req, res) => {
+  const token = req.headers.authorization
+  const deviceId = req.params.deviceId
+  const song = req.body
+
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
+      song,
+      config
+    )
+
+    res.status(200).json({ success: true })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// ******************************************************************** //
+
 // @desc    Update shuffle
 // @route   PUT /api/spotify/shuffle/:state
 // @access  Private
@@ -81,8 +111,6 @@ export const updateShuffle = async (req, res) => {
   }
 }
 
-// *************************************************** //
-
 // @desc    Get users top artists
 // @route   GET /api/spotify/mytopartists
 // @access  Private
@@ -103,34 +131,6 @@ export const getTopArtist = async (req, res) => {
     )
 
     res.status(200).json(data)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-// @desc    Set track
-// @route   PUT /api/spotify/player/:deviceId
-// @access  Private
-export const setTrack = async (req, res) => {
-  const token = req.headers.authorization
-  const deviceId = req.params.deviceId
-  const track = req.body
-
-  try {
-    const config = {
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-      },
-    }
-
-    await axios.put(
-      `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
-      track,
-      config
-    )
-
-    res.status(200).json({ success: true })
   } catch (error) {
     console.log(error)
   }

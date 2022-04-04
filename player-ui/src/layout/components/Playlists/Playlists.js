@@ -131,7 +131,7 @@ const Playlists = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={10}>
+          {/* <Grid item xs={10}>
             <Box
               sx={{
                 display: 'flex',
@@ -158,7 +158,7 @@ const Playlists = () => {
                 </Select>
               </FormControl>
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
 

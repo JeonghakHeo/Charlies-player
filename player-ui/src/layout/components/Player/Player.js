@@ -15,8 +15,13 @@ import RepeatIcon from '@mui/icons-material/Repeat'
 import QueueMusicIcon from '@mui/icons-material/QueueMusic'
 import VolumeDownIcon from '@mui/icons-material/VolumeDown'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
-import { SET_PAUSE } from '../../../redux/constants/playerConstants'
-import { toggleShuffle } from '../../../redux/actions/actions'
+import {
+  SET_PAUSE,
+  SET_ACTIVE,
+  SET_TRACK,
+} from '../../../redux/constants/playerConstants'
+import { playSong } from '../../../redux/actions/actions'
+// import { toggleShuffle } from '../../../redux/actions/actions'
 
 const useStyle = makeStyles({
   play: {
@@ -34,15 +39,17 @@ const useStyle = makeStyles({
   },
 })
 
+// sliderPosition === playerState?.position
+
 const Player = () => {
   const classes = useStyle()
-
-  const [timer, setTimer] = useState(0)
-  const [sliderPosition, setSliderPosition] = useState(0)
 
   const player = useSelector((state) => state.player)
   const { playerController, playerState, currentTrack } = player
 
+  const [sliderPosition, setSliderPosition] = useState(
+    Math.floor(playerState?.position / 1000)
+  )
   const dispatch = useDispatch()
 
   const togglePlay = () => {
@@ -55,10 +62,12 @@ const Player = () => {
   }
 
   const playPreviousTrack = () => {
+    setSliderPosition(0)
     playerController.previousTrack()
   }
 
   const playNextTrack = () => {
+    setSliderPosition(0)
     playerController.nextTrack()
   }
 
@@ -67,20 +76,37 @@ const Player = () => {
     // dispatch(toggleShuffle())
   }
 
+  // 1. onMouseDown pause player
+  // 2. setSliderPosition
+  // 3. onMouseUp playSong(sliderPosition) & start timer
+  const handleMouseDown = () => {
+    playerController.pause()
+  }
+
+  const handlePosition = (e, newValue) => {
+    setSliderPosition(newValue)
+  }
+
+  const handleMouseUp = () => {
+    dispatch(playSong(sliderPosition))
+  }
+
+  useEffect(() => {
+    setSliderPosition(Math.floor(playerState?.position / 1000))
+
+    if (!playerState?.paused) {
+      const timer = setInterval(() => {
+        setSliderPosition((sliderPosition) => sliderPosition + 1)
+      }, 1000)
+      return () => clearInterval(timer)
+    }
+  }, [playerState])
+
   const formatDuration = (duration) => {
     const minutes = Math.floor(duration / 60000)
     const seconds = ((duration % 60000) / 1000).toFixed(0)
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
   }
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setSliderPosition((sliderPosition) => sliderPosition + 1)
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [])
-  console.log(sliderPosition)
 
   return (
     <>
@@ -193,21 +219,25 @@ const Player = () => {
           }}
         >
           <Typography variant='subtitle2'>
-            {formatDuration(playerState?.position)}
+            {formatDuration(sliderPosition * 1000)}
           </Typography>
           <Slider
             defaultValue={0}
             value={sliderPosition}
             // value={Math.floor(parseInt(playerState.position))}
             max={Math.floor(parseInt(playerState?.duration / 1000))}
-            valueLabelDisplay='on'
+            // valueLabelDisplay='on'
             color='secondary'
             size='small'
             sx={{ margin: '0 10px' }}
-            // onChange={handlePosition}
+            onMouseDown={handleMouseDown}
+            onChange={handlePosition}
+            onMouseUp={handleMouseUp}
           />
           <Typography variant='subtitle2'>
-            {formatDuration(playerState?.duration - playerState?.position)}
+            {!playerState?.duration
+              ? '0:00'
+              : formatDuration(playerState?.duration)}
           </Typography>
         </Box>
       </Box>

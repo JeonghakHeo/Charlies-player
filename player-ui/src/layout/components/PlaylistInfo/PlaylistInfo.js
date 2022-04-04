@@ -47,8 +47,11 @@ const PlaylistInfo = () => {
               <Typography variant='h4'>
                 {playlistInfo?.owner?.display_name}{' '}
                 <span style={{ fontWeight: 'normal' }}>
-                  • {playlistInfo?.followers?.total} likes •{' '}
-                  {playlistInfo?.tracks?.total} songs,{' '}
+                  •{' '}
+                  {Intl.NumberFormat('en-US').format(
+                    playlistInfo?.followers?.total
+                  )}{' '}
+                  likes • {playlistInfo?.tracks?.total} songs,{' '}
                 </span>
                 <span style={{ color: '#b2b2b2', fontWeight: 'normal' }}>
                   14 hr 1 min

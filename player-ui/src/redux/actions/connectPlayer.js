@@ -13,9 +13,6 @@ import {
 
 const connectPlayer = (token) => async (dispatch, getState) => {
   try {
-    // const { playerState } = getState().player
-    // console.log('playerState: ', playerState)
-
     dispatch({ type: SET_PLAYER_REQUEST })
 
     const script = document.createElement('script')
@@ -42,7 +39,6 @@ const connectPlayer = (token) => async (dispatch, getState) => {
       })
 
       player.addListener('not_ready', ({ device_id }) => {
-        // dispatch({ type: CONNECT_PLAYER_FAIL })
         console.log('Device ID has gone offline', device_id)
       })
 
@@ -59,17 +55,17 @@ const connectPlayer = (token) => async (dispatch, getState) => {
           payload: state.track_window.current_track,
         })
 
-        dispatch({ type: SET_PAUSE, payload: state.paused })
+        // dispatch({ type: SET_PAUSE, payload: state.paused })
 
         player.getCurrentState().then((state) => {
           dispatch({ type: SET_PLAYER_STATE, payload: state })
         })
 
-        player.getCurrentState().then((state) => {
-          !state
-            ? dispatch({ type: SET_ACTIVE, payload: false })
-            : dispatch({ type: SET_ACTIVE, payload: true })
-        })
+        // player.getCurrentState().then((state) => {
+        //   !state
+        //     ? dispatch({ type: SET_ACTIVE, payload: false })
+        //     : dispatch({ type: SET_ACTIVE, payload: true })
+        // })
       })
     }
   } catch (error) {

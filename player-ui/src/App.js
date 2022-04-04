@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button'
 import Main from './layout/Main/Main'
-import Login from './layout/Login/Login'
-import Spinner from './layout/components/Spinner/Spinner'
+import Spinner from './utils/Spinner/Spinner'
 import connectPlayer from './redux/actions/connectPlayer'
 
 const App = () => {

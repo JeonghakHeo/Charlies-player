@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import './Main.css'
-import Spinner from '../components/Spinner/Spinner'
+import Spinner from '../../utils/Spinner/Spinner'
 import Navbar from '../components/Navbar/Navbar'
 import PlaylistInfo from '../components/PlaylistInfo/PlaylistInfo'
 import Playlists from '../components/Playlists/Playlists'
 import Player from '../components/Player/Player'
 import { getPlaylistInfo, getArtistInfo } from '../../redux/actions/actions'
 
-const Main = ({ token }) => {
+const Main = () => {
   const playlist = useSelector((state) => state.playlist)
   const { loading: playlistLoding } = playlist
 
