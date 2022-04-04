@@ -11,6 +11,7 @@ import {
   PLAY_SONG_REQUEST,
   PLAY_SONG_SUCCESS,
   PLAY_SONG_FAIL,
+  LOG_OUT,
 } from '../constants/playerConstants'
 
 export const getPlaylistInfo = () => async (dispatch) => {
@@ -91,6 +92,21 @@ export const playSong = (positionMs) => async (dispatch) => {
     dispatch({ type: PLAY_SONG_SUCCESS })
   } catch (error) {
     dispatch({ type: PLAY_SONG_FAIL })
+    console.log(error)
+  }
+}
+
+export const logout = () => async (dispatch, getState) => {
+  try {
+    const { playerController } = getState().player
+
+    playerController.disconnect()
+    localStorage.removeItem('token')
+    localStorage.removeItem('deviceId')
+
+    window.location.reload()
+    dispatch({ type: LOG_OUT })
+  } catch (error) {
     console.log(error)
   }
 }
