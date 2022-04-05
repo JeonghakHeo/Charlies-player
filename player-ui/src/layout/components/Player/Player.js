@@ -12,11 +12,15 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle'
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 import SkipNextIcon from '@mui/icons-material/SkipNext'
 import RepeatIcon from '@mui/icons-material/Repeat'
+import RepeatOneIcon from '@mui/icons-material/RepeatOne'
 import QueueMusicIcon from '@mui/icons-material/QueueMusic'
 import VolumeDownIcon from '@mui/icons-material/VolumeDown'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
-import { playSong } from '../../../redux/actions/actions'
-// import { toggleShuffle } from '../../../redux/actions/actions'
+import {
+  playSong,
+  toggleShuffle,
+  toggleRepeat,
+} from '../../../redux/actions/actions'
 
 const useStyle = makeStyles({
   play: {
@@ -37,6 +41,8 @@ const useStyle = makeStyles({
 const Player = () => {
   const classes = useStyle()
 
+  const dispatch = useDispatch()
+
   const player = useSelector((state) => state.player)
   const { playerController, playerState, currentTrack } = player
 
@@ -50,7 +56,6 @@ const Player = () => {
   const [sliderPosition, setSliderPosition] = useState(
     Math.floor(playerState?.position / 1000)
   )
-  const dispatch = useDispatch()
 
   const togglePlay = () => {
     playerController.togglePlay()
@@ -66,9 +71,12 @@ const Player = () => {
     playerController.nextTrack()
   }
 
-  const toggleShuffle = () => {
-    // console.log('shuffle')
-    // dispatch(toggleShuffle())
+  const updateShuffle = () => {
+    dispatch(toggleShuffle())
+  }
+
+  const updateRepeat = () => {
+    dispatch(toggleRepeat())
   }
 
   // 1. onMouseDown pause player
@@ -155,10 +163,10 @@ const Player = () => {
         >
           <ShuffleIcon
             color='secondary'
-            className={classes.icon}
+            className={playerState?.shuffle ? classes.active : classes.icon}
             fontSize='medium'
             sx={{ mr: 1 }}
-            onClick={toggleShuffle}
+            onClick={updateShuffle}
           />
           <SkipPreviousIcon
             color='secondary'
@@ -198,11 +206,21 @@ const Player = () => {
             sx={{ mr: 1 }}
             onClick={playNextTrack}
           />
-          <RepeatIcon
-            color='secondary'
-            className={classes.icon}
-            fontSize='medium'
-          />
+          {playerState?.repeat_mode === 0 ? (
+            <RepeatIcon
+              color='secondary'
+              className={classes.icon}
+              onClick={updateRepeat}
+            />
+          ) : playerState?.repeat_mode === 1 ? (
+            <RepeatIcon
+              color='secondary'
+              className={classes.active}
+              onClick={updateRepeat}
+            />
+          ) : (
+            <RepeatOneIcon className={classes.active} onClick={updateRepeat} />
+          )}
         </Box>
 
         <Box

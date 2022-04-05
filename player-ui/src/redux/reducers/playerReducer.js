@@ -12,6 +12,7 @@ import {
   TOGGLE_SHUFFLE_REQUEST,
   TOGGLE_SHUFFLE_SUCCESS,
   TOGGLE_SHUFFLE_FAIL,
+  TOGGLE_REPEAT_SUCCESS,
 } from '../constants/playerConstants'
 
 const initialState = {
@@ -32,7 +33,7 @@ const initialState = {
       ],
     },
   },
-  playerState: { duration: 184419, position: 0, paused: true },
+  playerState: { duration: 184419, position: 0, paused: true, shuffle: false },
 }
 
 export const playerReducer = (state = initialState, action) => {
@@ -91,6 +92,23 @@ export const playerReducer = (state = initialState, action) => {
         isActive: action.payload,
       }
 
+    case TOGGLE_SHUFFLE_SUCCESS:
+      return {
+        ...state,
+        playerState: {
+          ...state.playerState,
+          shuffle: action.payload,
+        },
+      }
+
+    case TOGGLE_REPEAT_SUCCESS:
+      return {
+        ...state,
+        playerState: {
+          ...state.playerState,
+          repeat_mode: action.payload,
+        },
+      }
     default:
       return state
   }

@@ -132,8 +132,6 @@ export const setTrack = async (req, res) => {
   }
 }
 
-// ******************************************************************** //
-
 // @desc    Update shuffle
 // @route   PUT /api/spotify/shuffle/:state
 // @access  Private
@@ -156,12 +154,50 @@ export const updateShuffle = async (req, res) => {
     )
 
     if (state === 'true') {
-      return res.send(true)
-    } else if (state === 'false') return res.send(false)
+      return res.json(true)
+    } else if (state === 'false') return res.json(false)
   } catch (error) {
     res.json(error)
   }
 }
+
+export const updateRepeat = async (req, res) => {
+  const state = req.params.state
+  const { deviceId } = req.body
+  const token = req.headers.authorization
+
+  console.log(deviceId)
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/repeat?state=${state}&device_id=${deviceId}`,
+      {},
+      config
+    )
+
+    if (state === 'context') {
+      return res.status(200).json(1)
+    }
+
+    if (state === 'track') {
+      return res.status(200).json(2)
+    }
+
+    if (state === 'off') {
+      return res.status(200).json(0)
+    }
+  } catch (error) {
+    res.json(error)
+  }
+}
+
+// ******************************************************************** //
 
 // @desc    Get users top artists
 // @route   GET /api/spotify/mytopartists
@@ -185,36 +221,5 @@ export const getTopArtist = async (req, res) => {
     res.status(200).json(data)
   } catch (error) {
     console.log(error)
-  }
-}
-
-export const updateRepeat = async (req, res) => {
-  const state = req.params.state
-  const { deviceId } = req.body
-  const token = req.headers.authorization
-
-  try {
-    const config = {
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-      },
-    }
-
-    await axios.put(
-      `https://api.spotify.com/v1/me/player/repeat?state=${state}&device_id=${deviceId}`,
-      {},
-      config
-    )
-
-    if (state === 'track') {
-      return res.status(200).send(true)
-    }
-
-    if (state === 'off') {
-      return res.status(200).send(false)
-    }
-  } catch (error) {
-    res.json(error)
   }
 }

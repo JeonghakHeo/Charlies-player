@@ -17,6 +17,10 @@ import {
   PLAY_SONG_REQUEST,
   PLAY_SONG_SUCCESS,
   PLAY_SONG_FAIL,
+  TOGGLE_SHUFFLE_SUCCESS,
+  TOGGLE_SHUFFLE_FAIL,
+  TOGGLE_REPEAT_SUCCESS,
+  TOGGLE_REPEAT_FAIL,
   LOG_OUT,
 } from '../constants/playerConstants'
 
@@ -150,6 +154,91 @@ export const playSong =
     }
   }
 
+export const toggleShuffle = () => async (dispatch, getState) => {
+  try {
+    const token = JSON.parse(localStorage.getItem('token'))
+    const { playerState } = getState().player
+
+    const shuffle = playerState.shuffle
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    if (shuffle === false) {
+      const { data } = await axios.put(
+        `/api/spotify/shuffle/${!shuffle}`,
+        {},
+        config
+      )
+      dispatch({ type: TOGGLE_SHUFFLE_SUCCESS, payload: data })
+    }
+
+    if (shuffle === true) {
+      const { data } = await axios.put(
+        `/api/spotify/shuffle/${!shuffle}`,
+        {},
+        config
+      )
+      dispatch({ type: TOGGLE_SHUFFLE_SUCCESS, payload: data })
+    }
+  } catch (error) {
+    dispatch({ type: TOGGLE_SHUFFLE_FAIL, payload: error })
+    console.log(error)
+  }
+}
+
+export const toggleRepeat = () => async (dispatch, getState) => {
+  try {
+    const token = JSON.parse(localStorage.getItem('token'))
+    const deviceId = JSON.parse(localStorage.getItem('deviceId'))
+
+    const { playerState } = getState().player
+
+    const repeat = playerState.repeat_mode
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    if (repeat === 0) {
+      const { data } = await axios.put(
+        `/api/spotify/repeat/context`,
+        { deviceId },
+        config
+      )
+      dispatch({ type: TOGGLE_REPEAT_SUCCESS, payload: data })
+    }
+
+    if (repeat === 1) {
+      const { data } = await axios.put(
+        `/api/spotify/repeat/track`,
+        { deviceId },
+        config
+      )
+      dispatch({ type: TOGGLE_REPEAT_SUCCESS, payload: data })
+    }
+
+    if (repeat === 2) {
+      const { data } = await axios.put(
+        `/api/spotify/repeat/off`,
+        { deviceId },
+        config
+      )
+      dispatch({ type: TOGGLE_REPEAT_SUCCESS, payload: data })
+    }
+  } catch (error) {
+    dispatch({ type: TOGGLE_REPEAT_FAIL })
+    console.log(error)
+  }
+}
+
 export const logout = () => async (dispatch, getState) => {
   try {
     const { playerController } = getState().player
@@ -162,44 +251,5 @@ export const logout = () => async (dispatch, getState) => {
     dispatch({ type: LOG_OUT })
   } catch (error) {
     console.log(error)
-  }
-}
-
-// **************************************************************** //
-
-export const toggleShuffle = () => async (dispatch, getState) => {
-  try {
-    const token = JSON.parse(localStorage.getItem('token'))
-    const { playerState } = getState().player
-
-    console.log(playerState.shuffle)
-
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    // }
-
-    // if (isShuffle === false) {
-    //   const { data } = await axios.put(
-    //     `/api/spotify/shuffle/${!isShuffle}`,
-    //     {},
-    //     config
-    //   )
-    //   dispatch({ type: TOGGLE_SHUFFLE_SUCCESS, payload: data })
-    // }
-
-    // if (isShuffle === true) {
-    //   const { data } = await axios.put(
-    //     `/api/spotify/shuffle/${!isShuffle}`,
-    //     {},
-    //     config
-    //   )
-    //   dispatch({ type: TOGGLE_SHUFFLE_SUCCESS, payload: data })
-    // }
-  } catch (error) {
-    // dispatch({ type: TOGGLE_SHUFFLE_FAIL, payload: error })
-    // console.log(error)
   }
 }
