@@ -18,8 +18,8 @@ import Select from '@mui/material/Select'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import PlaylistCover from '../PlaylistCover/PlaylistCover'
 import { SET_PAUSE } from '../../../redux/constants/playerConstants'
-
 import moment from 'moment'
+import { playSong } from '../../../redux/actions/actions'
 
 const useStyle = makeStyles({
   active: {
@@ -59,6 +59,20 @@ const Playlists = () => {
 
   const tracks = playlistInfo?.tracks?.items?.slice(0, 12)
 
+  // const filterAritsts = playlistInfo?.tracks?.items?.map(
+  //   (item) => item?.track.artists
+  // )
+
+  // const filteredArtists = filterAritsts.map((item) =>
+  //   item.map((artist) => artist.name)
+  // )
+
+  // console.log(filteredArtists)
+
+  const handleClick = (position) => {
+    dispatch(playSong(playlistInfo?.id, position))
+  }
+
   const togglePlay = () => {
     playerController.togglePlay()
     if (playerState?.paused) {
@@ -78,10 +92,13 @@ const Playlists = () => {
     return moment.utc(addedAt).format('MMM D, YYYY')
   }
 
-  const [value, setValue] = useState('')
-  const handleChange = (event) => {
-    setValue(event.target.value)
-  }
+  // const [value, setValue] = useState('')
+  // const handleChange = (event) => {
+  //   setValue(event.target.value)
+  // }
+
+  // const artistsArray = tracks?.map((item) => item?.track?.artists)
+  // console.log(artistsArray[0][0].name)
 
   return (
     <>
@@ -231,6 +248,7 @@ const Playlists = () => {
                   container
                   justifyContent='space-between'
                   alignItems='center'
+                  onClick={() => handleClick(index)}
                   sx={{
                     '&:hover': {
                       backgroundColor: '#2a2a2a',
@@ -269,7 +287,7 @@ const Playlists = () => {
                       <Typography variant='body1'>
                         {track?.track?.name}
                       </Typography>
-                      <Typography variant='subtitle1'>Madeon, Kyan</Typography>
+                      <Typography variant='subtitle1'>Simon Field</Typography>
                     </Box>
                   </Grid>
                   <Grid item xs={3}>

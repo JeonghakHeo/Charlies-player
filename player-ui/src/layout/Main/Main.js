@@ -10,7 +10,7 @@ import { getPlaylistInfo, getArtistInfo } from '../../redux/actions/actions'
 
 const Main = () => {
   const playlist = useSelector((state) => state.playlist)
-  const { loading: playlistLoding } = playlist
+  const { loading: playlistLoding, playlistInfo } = playlist
 
   const artist = useSelector((state) => state.artist)
   const { loading: artistLoading } = artist
@@ -19,7 +19,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(getPlaylistInfo())
-    dispatch(getArtistInfo())
+    dispatch(getArtistInfo(playlistInfo?.owner?.id))
   }, [dispatch])
 
   return (

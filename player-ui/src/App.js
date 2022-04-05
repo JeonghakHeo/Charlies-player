@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import Main from './layout/Main/Main'
 import Spinner from './utils/Spinner/Spinner'
 import connectPlayer from './redux/actions/connectPlayer'
+import { getMyPlaylists, getMyProfile } from './redux/actions/actions'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -64,6 +65,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(connectPlayer(JSON.parse(localStorage.getItem('token'))))
+    dispatch(getMyProfile())
+    dispatch(getMyPlaylists())
   })
 
   return (

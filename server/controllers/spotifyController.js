@@ -1,5 +1,57 @@
 import axios from 'axios'
 
+// @desc    Get my playlists
+// @route   GET /api/spotify/myprofile
+// @access  Private
+export const getMyProfile = async (req, res) => {
+  const userId = process.env.MY_USER_ID
+  const token = req.headers.authorization
+
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/users/${userId}`,
+      config
+    )
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// @desc    Get my playlists
+// @route   GET /api/spotify/myplaylists/:userId
+// @access  Private
+export const getMyPlaylists = async (req, res) => {
+  const userId = process.env.MY_USER_ID
+  const token = req.headers.authorization
+
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/users/${userId}/playlists`,
+      config
+    )
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // @desc    Get playlist details
 // @route   GET /api/spotify/playlist/:id
 // @access  Private

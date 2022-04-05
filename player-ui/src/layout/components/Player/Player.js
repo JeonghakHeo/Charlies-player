@@ -15,11 +15,6 @@ import RepeatIcon from '@mui/icons-material/Repeat'
 import QueueMusicIcon from '@mui/icons-material/QueueMusic'
 import VolumeDownIcon from '@mui/icons-material/VolumeDown'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
-import {
-  SET_PAUSE,
-  SET_ACTIVE,
-  SET_TRACK,
-} from '../../../redux/constants/playerConstants'
 import { playSong } from '../../../redux/actions/actions'
 // import { toggleShuffle } from '../../../redux/actions/actions'
 
@@ -39,13 +34,18 @@ const useStyle = makeStyles({
   },
 })
 
-// sliderPosition === playerState?.position
-
 const Player = () => {
   const classes = useStyle()
 
   const player = useSelector((state) => state.player)
   const { playerController, playerState, currentTrack } = player
+
+  const playlist = useSelector((state) => state.playlist)
+  const { playlistInfo } = playlist
+
+  const index = playlistInfo?.tracks?.items?.findIndex(
+    (item) => item?.track?.id === currentTrack?.id
+  )
 
   const [sliderPosition, setSliderPosition] = useState(
     Math.floor(playerState?.position / 1000)
@@ -54,11 +54,6 @@ const Player = () => {
 
   const togglePlay = () => {
     playerController.togglePlay()
-    if (playerState?.paused) {
-      dispatch({ type: SET_PAUSE, payload: false })
-    } else {
-      dispatch({ type: SET_PAUSE, payload: true })
-    }
   }
 
   const playPreviousTrack = () => {
@@ -88,7 +83,7 @@ const Player = () => {
   }
 
   const handleMouseUp = () => {
-    dispatch(playSong(sliderPosition))
+    dispatch(playSong(playlistInfo?.id, index, sliderPosition))
   }
 
   useEffect(() => {
@@ -219,12 +214,13 @@ const Player = () => {
           }}
         >
           <Typography variant='subtitle2'>
-            {formatDuration(sliderPosition * 1000)}
+            {!playerState?.position
+              ? '0:00'
+              : formatDuration(sliderPosition * 1000)}
           </Typography>
           <Slider
             defaultValue={0}
             value={sliderPosition}
-            // value={Math.floor(parseInt(playerState.position))}
             max={Math.floor(parseInt(playerState?.duration / 1000))}
             // valueLabelDisplay='on'
             color='secondary'

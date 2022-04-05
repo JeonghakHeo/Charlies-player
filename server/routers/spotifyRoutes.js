@@ -1,5 +1,7 @@
 import express from 'express'
 import {
+  getMyProfile,
+  getMyPlaylists,
   getPlaylist,
   getArtist,
   setTrack,
@@ -10,6 +12,8 @@ import {
 
 const router = express.Router()
 
+router.route('/myprofile').get(getMyProfile)
+router.route('/myplaylists').get(getMyPlaylists)
 router.route('/playlist/:id').get(getPlaylist)
 router.route('/artist/:id').get(getArtist)
 router.route('/player/:deviceId').put(setTrack)

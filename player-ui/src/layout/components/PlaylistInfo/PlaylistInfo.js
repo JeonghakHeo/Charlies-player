@@ -13,6 +13,25 @@ const PlaylistInfo = () => {
   const artist = useSelector((state) => state.artist)
   const { artistInfo } = artist
 
+  const totalPlaylistDurationMs = playlistInfo?.tracks?.items
+    ?.map((item) => item?.track?.duration_ms)
+    .filter((duration) => duration !== undefined)
+    .reduce((previousValue, currentValue) => previousValue + currentValue)
+
+  const formatTime = (milliseconds) => {
+    const seconds = Math.floor((milliseconds / 1000) % 60)
+    const minutes = Math.floor((milliseconds / 1000 / 60) % 60)
+    const hours = Math.floor((milliseconds / 1000 / 60 / 60) % 24)
+
+    return [
+      hours.toString().padStart(2, '0'),
+      minutes.toString().padStart(2, '0'),
+      seconds.toString().padStart(2, '0'),
+    ].join(':')
+  }
+
+  const totalPlaylistDuration = formatTime(totalPlaylistDurationMs)
+
   return (
     <>
       <Grid container sx={{ height: '100%' }}>
@@ -54,7 +73,10 @@ const PlaylistInfo = () => {
                   likes • {playlistInfo?.tracks?.total} songs,{' '}
                 </span>
                 <span style={{ color: '#b2b2b2', fontWeight: 'normal' }}>
-                  14 hr 1 min
+                  {totalPlaylistDuration.split(':')[0].startsWith('0')
+                    ? totalPlaylistDuration.split(':')[0].slice(-1)
+                    : totalPlaylistDuration.split(':')[0]}{' '}
+                  hr {totalPlaylistDuration.split(':')[1]} min
                 </span>
               </Typography>
             </Box>
