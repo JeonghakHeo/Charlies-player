@@ -17,6 +17,8 @@ import {
   PLAY_SONG_REQUEST,
   PLAY_SONG_SUCCESS,
   PLAY_SONG_FAIL,
+  SET_PLAYBACK_VOLUME_SUCCESS,
+  SET_PLAYBACK_VOLUME_FAIL,
   TOGGLE_SHUFFLE_SUCCESS,
   TOGGLE_SHUFFLE_FAIL,
   TOGGLE_REPEAT_SUCCESS,
@@ -145,7 +147,7 @@ export const playSong =
         },
       }
 
-      await axios.put(`/api/spotify/player/${deviceId}`, body, config)
+      await axios.put(`/api/spotify/player/track/${deviceId}`, body, config)
 
       dispatch({ type: PLAY_SONG_SUCCESS })
     } catch (error) {
@@ -235,6 +237,26 @@ export const toggleRepeat = () => async (dispatch, getState) => {
     }
   } catch (error) {
     dispatch({ type: TOGGLE_REPEAT_FAIL })
+    console.log(error)
+  }
+}
+
+export const setPlaybackVolume = (volume) => async (dispatch, getState) => {
+  try {
+    const token = JSON.parse(localStorage.getItem('token'))
+    const deviceId = JSON.parse(localStorage.getItem('deviceId'))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await axios.put(`/api/player/volume/${deviceId}`, { volume }, config)
+    dispatch({ type: SET_PLAYBACK_VOLUME_SUCCESS })
+  } catch (error) {
+    dispatch({ type: SET_PLAYBACK_VOLUME_FAIL })
     console.log(error)
   }
 }

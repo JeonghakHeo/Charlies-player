@@ -33,7 +33,13 @@ const initialState = {
       ],
     },
   },
-  playerState: { duration: 184419, position: 0, paused: true, shuffle: false },
+  playerState: {
+    duration: 184419,
+    position: 0,
+    paused: true,
+    shuffle: false,
+    repeat_mode: 0,
+  },
 }
 
 export const playerReducer = (state = initialState, action) => {

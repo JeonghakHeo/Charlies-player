@@ -161,10 +161,13 @@ export const updateShuffle = async (req, res) => {
   }
 }
 
+// @desc    Update repeat
+// @route   PUT /api/spotify/repeat/:state
+// @access  Private
 export const updateRepeat = async (req, res) => {
+  const token = req.headers.authorization
   const state = req.params.state
   const { deviceId } = req.body
-  const token = req.headers.authorization
 
   console.log(deviceId)
   try {
@@ -197,14 +200,13 @@ export const updateRepeat = async (req, res) => {
   }
 }
 
-// ******************************************************************** //
-
-// @desc    Get users top artists
+// @desc    Set playback volume
 // @route   GET /api/spotify/mytopartists
 // @access  Private
-export const getTopArtist = async (req, res) => {
+export const setVolume = async (req, res) => {
   const token = req.headers.authorization
-
+  const { deviceId } = req.params
+  const { volume } = req.body
   try {
     const config = {
       headers: {
@@ -213,12 +215,13 @@ export const getTopArtist = async (req, res) => {
       },
     }
 
-    const { data } = await axios.get(
-      'https://api.spotify.com/v1/me/top/artists?limit=4',
+    await axios.put(
+      `https://api.spotify.com/v1/me/player/volume?volume_percent=${volume}&device_id=${deviceId}`,
+      {},
       config
     )
 
-    res.status(200).json(data)
+    res.status(200).json({ success: true })
   } catch (error) {
     console.log(error)
   }

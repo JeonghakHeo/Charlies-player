@@ -14,12 +14,15 @@ import SkipNextIcon from '@mui/icons-material/SkipNext'
 import RepeatIcon from '@mui/icons-material/Repeat'
 import RepeatOneIcon from '@mui/icons-material/RepeatOne'
 import QueueMusicIcon from '@mui/icons-material/QueueMusic'
+import VolumeOffIcon from '@mui/icons-material/VolumeOff'
 import VolumeDownIcon from '@mui/icons-material/VolumeDown'
+import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import {
   playSong,
   toggleShuffle,
   toggleRepeat,
+  setPlaybackVolume,
 } from '../../../redux/actions/actions'
 
 const useStyle = makeStyles({
@@ -57,6 +60,8 @@ const Player = () => {
     Math.floor(playerState?.position / 1000)
   )
 
+  const [volume, setVolume] = useState(50)
+
   const togglePlay = () => {
     playerController.togglePlay()
   }
@@ -77,6 +82,12 @@ const Player = () => {
 
   const updateRepeat = () => {
     dispatch(toggleRepeat())
+  }
+
+  const handleVolume = (e, newValue) => {
+    setVolume(newValue)
+    playerController.setVolume(newValue / 100)
+    dispatch(setPlaybackVolume(volume))
   }
 
   // 1. onMouseDown pause player
@@ -271,12 +282,24 @@ const Player = () => {
           className={classes.icon}
           sx={{ mr: 1 }}
         />
-        <VolumeDownIcon color='secondary' className={classes.icon} />
+        {volume === 0 ? (
+          <VolumeOffIcon color='secondary' className={classes.icon} />
+        ) : volume > 0 && volume <= 40 ? (
+          <VolumeDownIcon color='secondary' className={classes.icon} />
+        ) : volume > 40 ? (
+          <VolumeUpIcon color='secondary' className={classes.icon} />
+        ) : (
+          <VolumeUpIcon color='secondary' className={classes.icon} />
+        )}
+
         <Slider
-          defaultValue={50}
+          min={0}
+          max={100}
+          value={volume}
           color='secondary'
           size='small'
           sx={{ margin: '0 10px', width: '20%' }}
+          onChange={handleVolume}
         />
         <OpenInFullIcon
           color='secondary'

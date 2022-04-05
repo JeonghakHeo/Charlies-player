@@ -1,9 +1,6 @@
 featuring artists
-shuffle
-repeat
 volume
-total mins
-
+total mins on I FEEL DEAM GOOD !
 change index to icon on playlist
 
 clean up trees
