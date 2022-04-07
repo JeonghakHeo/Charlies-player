@@ -1,6 +1,20 @@
 featuring artists
-volume
+
 total mins on I FEEL DEAM GOOD !
+
 change index to icon on playlist
 
 clean up trees
+
+
+const tracks = playlistInfo?.tracks?.items
+
+  const filterArtists = tracks?.map((item) =>
+    item?.track?.artists?.map((artist) => artist.name)
+  )
+
+  console.log(filterArtists[80].join(', '))
+
+
+
+if track is in liked song then green heart

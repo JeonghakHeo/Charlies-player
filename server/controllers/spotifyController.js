@@ -52,6 +52,31 @@ export const getMyPlaylists = async (req, res) => {
   }
 }
 
+// @desc    Get my liked songs
+// @route   GET /api/spotify/mylikedsongs
+// @access  Private
+export const getMyLikedSongs = async (req, res) => {
+  const token = req.headers.authorization
+
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/me/tracks`,
+      config
+    )
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // @desc    Get playlist details
 // @route   GET /api/spotify/playlist/:id
 // @access  Private
@@ -126,7 +151,66 @@ export const setTrack = async (req, res) => {
       config
     )
 
-    res.status(200).json({ success: true })
+    res.status(200).json(true)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// @desc    Like track
+// @route   PUT /api/spotify/track/:id
+// @access  Private
+export const likeTrack = async (req, res) => {
+  const id = req.params.id
+  const token = req.headers.authorization
+
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await axios.put(
+      `https://api.spotify.com/v1/me/tracks?ids=${id}`,
+      {},
+      config
+    )
+
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/me/tracks`,
+      config
+    )
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// @desc    Unlike track
+// @route   PUT /api/spotify/track/:id
+// @access  Private
+export const unlikeTrack = async (req, res) => {
+  const id = req.params.id
+  const token = req.headers.authorization
+
+  try {
+    const config = {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await axios.delete(`https://api.spotify.com/v1/me/tracks?ids=${id}`, config)
+
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/me/tracks`,
+      config
+    )
+
+    res.status(200).json(data)
   } catch (error) {
     console.log(error)
   }
@@ -157,7 +241,7 @@ export const updateShuffle = async (req, res) => {
       return res.json(true)
     } else if (state === 'false') return res.json(false)
   } catch (error) {
-    res.json(error)
+    console.log(error)
   }
 }
 
@@ -169,7 +253,6 @@ export const updateRepeat = async (req, res) => {
   const state = req.params.state
   const { deviceId } = req.body
 
-  console.log(deviceId)
   try {
     const config = {
       headers: {
@@ -196,7 +279,7 @@ export const updateRepeat = async (req, res) => {
       return res.status(200).json(0)
     }
   } catch (error) {
-    res.json(error)
+    console.log(error)
   }
 }
 

@@ -6,7 +6,7 @@ import request from 'request'
 export const requestUserAuthorization = (req, res) => {
   const spotifyClientId = process.env.SPOTIFY_CLIENT_ID
   const scope =
-    'streaming user-read-email user-read-private playlist-read-collaborative user-modify-playback-state user-top-read'
+    'streaming user-read-email user-read-private playlist-read-collaborative user-modify-playback-state user-library-read user-library-modify'
 
   const state = generateRandomString(16)
 

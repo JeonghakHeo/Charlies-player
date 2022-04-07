@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import './Main.css'
-import Spinner from '../../utils/Spinner/Spinner'
+import Spinner from '../components/utils/Spinner/Spinner'
 import Navbar from '../components/Navbar/Navbar'
 import PlaylistInfo from '../components/PlaylistInfo/PlaylistInfo'
 import Playlists from '../components/Playlists/Playlists'

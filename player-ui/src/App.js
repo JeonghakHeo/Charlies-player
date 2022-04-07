@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button'
 import Main from './layout/Main/Main'
-import Spinner from './utils/Spinner/Spinner'
+import Spinner from './layout/components/utils/Spinner/Spinner'
 import connectPlayer from './redux/actions/connectPlayer'
 import { getMyPlaylists, getMyProfile } from './redux/actions/actions'
 
