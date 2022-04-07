@@ -12,6 +12,9 @@ import {
   GET_MY_PROFILE_REQUEST,
   GET_MY_PROFILE_SUCCESS,
   GET_MY_PROFILE_FAIL,
+  GET_MY_LIKED_SONG_FAIL,
+  GET_MY_LIKED_SONG_REQUEST,
+  GET_MY_LIKED_SONG_SUCCESS,
 } from '../constants/spotifyConstants'
 import {
   PLAY_SONG_REQUEST,
@@ -19,11 +22,15 @@ import {
   PLAY_SONG_FAIL,
   SET_PLAYBACK_VOLUME_SUCCESS,
   SET_PLAYBACK_VOLUME_FAIL,
+  LIKE_SONG_SUCCESS,
+  LIKE_SONG_FAIL,
   TOGGLE_SHUFFLE_SUCCESS,
   TOGGLE_SHUFFLE_FAIL,
   TOGGLE_REPEAT_SUCCESS,
   TOGGLE_REPEAT_FAIL,
   LOG_OUT,
+  UNLIKE_SONG_SUCCESS,
+  UNLIKE_SONG_FAIL,
 } from '../constants/playerConstants'
 
 export const getMyProfile = () => async (dispatch) => {
@@ -64,6 +71,27 @@ export const getMyPlaylists = () => async (dispatch) => {
     dispatch({ type: GET_MY_PLAYLISTS_SUCCESS, payload: data })
   } catch (error) {
     dispatch({ type: GET_MY_PLAYLISTS_FAIL })
+    console.log(error)
+  }
+}
+
+export const getMyLikedSongs = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_MY_LIKED_SONG_REQUEST })
+
+    const token = JSON.parse(localStorage.getItem('token'))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+    const { data } = await axios.get(`/api/spotify/mylikedsongs`, config)
+
+    dispatch({ type: GET_MY_LIKED_SONG_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: GET_MY_LIKED_SONG_FAIL, payload: error })
     console.log(error)
   }
 }
@@ -155,6 +183,46 @@ export const playSong =
       console.log(error)
     }
   }
+
+export const likeSong = (songId) => async (dispatch) => {
+  try {
+    const token = JSON.parse(localStorage.getItem('token'))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.put(`/api/spotify/track/${songId}`, {}, config)
+
+    dispatch({ type: LIKE_SONG_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: LIKE_SONG_FAIL, payload: error })
+    console.log(error)
+  }
+}
+
+export const unlikeSong = (songId) => async (dispatch) => {
+  try {
+    const token = JSON.parse(localStorage.getItem('token'))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.delete(`/api/spotify/track/${songId}`, config)
+
+    dispatch({ type: UNLIKE_SONG_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: UNLIKE_SONG_FAIL, payload: error })
+    console.log(error)
+  }
+}
 
 export const toggleShuffle = () => async (dispatch, getState) => {
   try {

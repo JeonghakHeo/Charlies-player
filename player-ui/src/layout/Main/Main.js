@@ -6,9 +6,19 @@ import Navbar from '../components/Navbar/Navbar'
 import PlaylistInfo from '../components/PlaylistInfo/PlaylistInfo'
 import Playlists from '../components/Playlists/Playlists'
 import Player from '../components/Player/Player'
-import { getPlaylistInfo, getArtistInfo } from '../../redux/actions/actions'
+import {
+  getPlaylistInfo,
+  getArtistInfo,
+  getMyLikedSongs,
+} from '../../redux/actions/actions'
 
 const Main = () => {
+  const myProfile = useSelector((state) => state.myProfile)
+  const { loading: myProfileInfoLoading } = myProfile
+
+  const myPlaylists = useSelector((state) => state.myPlaylists)
+  const { loading: myPlaylistsInfoLoading } = myPlaylists
+
   const playlist = useSelector((state) => state.playlist)
   const { loading: playlistLoding, playlistInfo } = playlist
 
@@ -20,11 +30,15 @@ const Main = () => {
   useEffect(() => {
     dispatch(getPlaylistInfo())
     dispatch(getArtistInfo(playlistInfo?.owner?.id))
+    dispatch(getMyLikedSongs())
   }, [dispatch])
 
   return (
     <>
-      {playlistLoding && artistLoading ? (
+      {myProfileInfoLoading ||
+      myPlaylistsInfoLoading ||
+      playlistLoding ||
+      artistLoading ? (
         <Spinner />
       ) : (
         <>

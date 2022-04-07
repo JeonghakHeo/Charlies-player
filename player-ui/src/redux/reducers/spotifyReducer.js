@@ -1,10 +1,17 @@
 import {
+  LIKE_SONG_SUCCESS,
+  UNLIKE_SONG_SUCCESS,
+} from '../constants/playerConstants'
+import {
   GET_MY_PROFILE_REQUEST,
   GET_MY_PROFILE_SUCCESS,
   GET_MY_PROFILE_FAIL,
   GET_MY_PLAYLISTS_REQUEST,
   GET_MY_PLAYLISTS_SUCCESS,
   GET_MY_PLAYLISTS_FAIL,
+  GET_MY_LIKED_SONG_REQUEST,
+  GET_MY_LIKED_SONG_SUCCESS,
+  GET_MY_LIKED_SONG_FAIL,
   GET_PLAYLIST_REQUEST,
   GET_PLAYLIST_SUCCESS,
   GET_PLAYLIST_FAIL,
@@ -101,6 +108,59 @@ export const artistReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       }
+    default:
+      return state
+  }
+}
+
+export const myLikedSongsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_MY_LIKED_SONG_REQUEST:
+      return {
+        loading: true,
+      }
+
+    case GET_MY_LIKED_SONG_SUCCESS:
+      return {
+        loading: false,
+        myLikedSongsInfo: action.payload,
+      }
+
+    case GET_MY_LIKED_SONG_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+
+    case LIKE_SONG_SUCCESS:
+      return {
+        myLikedSongsInfo: action.payload,
+      }
+
+    case UNLIKE_SONG_SUCCESS:
+      return {
+        myLikedSongsInfo: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export const likeHandlerReducer = (
+  state = { like: false, unlike: false },
+  action
+) => {
+  switch (action.type) {
+    case LIKE_SONG_SUCCESS:
+      return {
+        like: true,
+      }
+
+    case UNLIKE_SONG_SUCCESS:
+      return {
+        unlike: true,
+      }
+
     default:
       return state
   }

@@ -4,8 +4,12 @@ import { makeStyles } from '@mui/styles'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Slider from '@mui/material/Slider'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import PlaylistCover from '../PlaylistCover/PlaylistCover'
+import Snackbar from '@mui/material/Snackbar'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 import ShuffleIcon from '@mui/icons-material/Shuffle'
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle'
@@ -18,11 +22,15 @@ import VolumeOffIcon from '@mui/icons-material/VolumeOff'
 import VolumeDownIcon from '@mui/icons-material/VolumeDown'
 import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
+import CustomSnackbar from '../../../utils/CustomSnackbar/CustomSnackbar'
 import {
   playSong,
+  likeSong,
+  unlikeSong,
   toggleShuffle,
   toggleRepeat,
   setPlaybackVolume,
+  getMyLikedSongs,
 } from '../../../redux/actions/actions'
 
 const useStyle = makeStyles({
@@ -52,6 +60,16 @@ const Player = () => {
   const playlist = useSelector((state) => state.playlist)
   const { playlistInfo } = playlist
 
+  const myLikedSongs = useSelector((state) => state.myLikedSongs)
+  const { myLikedSongsInfo } = myLikedSongs
+
+  const myLikedSongsIds = myLikedSongsInfo?.items?.map(
+    (likedSong) => likedSong?.track?.id
+  )
+
+  const likeHandler = useSelector((state) => state.likeHandler)
+  const { like, unlike } = likeHandler
+
   const index = playlistInfo?.tracks?.items?.findIndex(
     (item) => item?.track?.id === currentTrack?.id
   )
@@ -76,6 +94,16 @@ const Player = () => {
     playerController.nextTrack()
   }
 
+  const isAlreadyLiked = myLikedSongsIds?.includes(currentTrack?.id)
+
+  const updateLike = () => {
+    if (isAlreadyLiked) {
+      dispatch(unlikeSong(currentTrack?.id))
+    } else {
+      dispatch(likeSong(currentTrack?.id))
+    }
+  }
+
   const updateShuffle = () => {
     dispatch(toggleShuffle())
   }
@@ -88,6 +116,12 @@ const Player = () => {
     setVolume(newValue)
     playerController.setVolume(newValue / 100)
     dispatch(setPlaybackVolume(volume))
+  }
+
+  const muteVolume = () => {
+    setVolume(0)
+    playerController.setVolume(0)
+    dispatch(setPlaybackVolume(0))
   }
 
   // 1. onMouseDown pause player
@@ -114,7 +148,9 @@ const Player = () => {
       }, 1000)
       return () => clearInterval(timer)
     }
-  }, [playerState])
+
+    dispatch(getMyLikedSongs())
+  }, [dispatch, playerState])
 
   const formatDuration = (duration) => {
     const minutes = Math.floor(duration / 60000)
@@ -123,53 +159,88 @@ const Player = () => {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        backgroundColor: '',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+      }}
+    >
       <Box
         sx={{
-          padding: '20px',
+          backgroundColor: '',
+          padding: '20px ',
           width: '30%',
-          height: '50px',
           display: 'flex',
+
           alignItems: 'center',
         }}
       >
         <Box
           sx={{
+            backgroundColor: 'red',
             marginRight: '15px',
             height: '60px',
             width: '60px',
-            backgroundColor: '',
           }}
         >
           <PlaylistCover image={currentTrack?.album?.images[0]?.url} />
         </Box>
+
         <Box sx={{ marginRight: '25px' }}>
           <Typography variant='body2'>{currentTrack?.name}</Typography>
           <Typography variant='subtitle2'>
             {currentTrack?.artists?.map((artist) => artist.name)}
           </Typography>
         </Box>
+
         <Box>
-          <FavoriteBorderIcon color='secondary' className={classes.icon} />
+          {isAlreadyLiked ? (
+            <FavoriteIcon
+              color='primary'
+              className={classes.active}
+              sx={{
+                '&:hover': {
+                  color: '#1DB954',
+                },
+              }}
+              onClick={updateLike}
+            />
+          ) : !isAlreadyLiked ? (
+            <FavoriteBorderIcon
+              color='secondary'
+              className={classes.icon}
+              onClick={updateLike}
+            />
+          ) : (
+            <FavoriteBorderIcon
+              color='secondary'
+              className={classes.icon}
+              onClick={updateLike}
+            />
+          )}
         </Box>
       </Box>
+
       <Box
         sx={{
-          backgroundColor: '',
-          padding: '20px',
+          padding: '20px 10px',
           width: '40%',
-          height: '50px',
           display: 'flex',
           justifyContent: 'center',
+          alignItems: 'center',
           flexDirection: 'column',
         }}
       >
         <Box
           sx={{
+            backgroundColor: '',
+            width: 'inehrit',
             textAlign: 'center',
             display: 'flex',
             alignItems: 'center',
-            transform: 'translateX(21%)',
           }}
         >
           <ShuffleIcon
@@ -236,7 +307,7 @@ const Player = () => {
 
         <Box
           sx={{
-            transform: 'translateX(-10%)',
+            width: '100%',
             display: 'flex',
             justifyContent: 'space-around',
             alignItems: 'center',
@@ -251,7 +322,6 @@ const Player = () => {
             defaultValue={0}
             value={sliderPosition}
             max={Math.floor(parseInt(playerState?.duration / 1000))}
-            // valueLabelDisplay='on'
             color='secondary'
             size='small'
             sx={{ margin: '0 10px' }}
@@ -266,6 +336,7 @@ const Player = () => {
           </Typography>
         </Box>
       </Box>
+
       <Box
         sx={{
           backgroundColor: '',
@@ -277,19 +348,35 @@ const Player = () => {
           alignItems: 'center',
         }}
       >
-        <QueueMusicIcon
+        {/* <QueueMusicIcon
           color='secondary'
           className={classes.icon}
           sx={{ mr: 1 }}
-        />
+        /> */}
         {volume === 0 ? (
-          <VolumeOffIcon color='secondary' className={classes.icon} />
+          <VolumeOffIcon
+            color='secondary'
+            className={classes.icon}
+            onClick={muteVolume}
+          />
         ) : volume > 0 && volume <= 40 ? (
-          <VolumeDownIcon color='secondary' className={classes.icon} />
+          <VolumeDownIcon
+            color='secondary'
+            className={classes.icon}
+            onClick={muteVolume}
+          />
         ) : volume > 40 ? (
-          <VolumeUpIcon color='secondary' className={classes.icon} />
+          <VolumeUpIcon
+            color='secondary'
+            className={classes.icon}
+            onClick={muteVolume}
+          />
         ) : (
-          <VolumeUpIcon color='secondary' className={classes.icon} />
+          <VolumeUpIcon
+            color='secondary'
+            className={classes.icon}
+            onClick={muteVolume}
+          />
         )}
 
         <Slider
@@ -301,13 +388,17 @@ const Player = () => {
           sx={{ margin: '0 10px', width: '20%' }}
           onChange={handleVolume}
         />
-        <OpenInFullIcon
+        {/* <OpenInFullIcon
           color='secondary'
           size='small'
           className={classes.icon}
-        />
+        /> */}
       </Box>
-    </>
+      <CustomSnackbar
+        like={like ? like : null}
+        unlike={unlike ? unlike : null}
+      />
+    </Box>
   )
 }
 

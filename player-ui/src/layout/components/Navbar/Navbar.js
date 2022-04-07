@@ -10,7 +10,6 @@ import Collapse from '@mui/material/Collapse'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ListIcon from '@mui/icons-material/List'
@@ -22,11 +21,11 @@ const Navbar = () => {
   const myProfile = useSelector((state) => state.myProfile)
   const { myProfileInfo } = myProfile
 
-  const playlist = useSelector((state) => state.playlist)
-  const { playlistInfo } = playlist
-
   const myPlaylists = useSelector((state) => state.myPlaylists)
   const { myPlaylistsInfo } = myPlaylists
+
+  const playlist = useSelector((state) => state.playlist)
+  const { playlistInfo } = playlist
 
   const [openMe, setOpenMe] = useState(false)
   const [openPlaylists, setOpenPlaylists] = useState(false)

@@ -4,6 +4,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {
   myProfileReducer,
   myPlaylistsReducer,
+  myLikedSongsReducer,
+  likeHandlerReducer,
   playlistReducer,
   artistReducer,
 } from './reducers/spotifyReducer'
@@ -12,16 +14,14 @@ import { playerReducer } from './reducers/playerReducer'
 const reducer = combineReducers({
   myProfile: myProfileReducer,
   myPlaylists: myPlaylistsReducer,
+  myLikedSongs: myLikedSongsReducer,
+  likeHandler: likeHandlerReducer,
   playlist: playlistReducer,
   player: playerReducer,
   artist: artistReducer,
 })
 
-const initialState = {
-  // token: localStorage.getItem('token')
-  //   ? JSON.parse(localStorage.getItem('token'))
-  //   : null,
-}
+const initialState = {}
 
 const middleware = [thunk]
 

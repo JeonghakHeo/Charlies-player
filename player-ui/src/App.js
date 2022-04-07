@@ -75,6 +75,8 @@ const App = () => {
         <Main token={token} />
       ) : loading && !token ? (
         <Spinner />
+      ) : !token ? (
+        <Login />
       ) : (
         <Login />
       )}

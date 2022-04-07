@@ -21,17 +21,15 @@
   );
 }
 
+
 .playlist-details {
   margin-top: 70px;
 }
 
 .playlist-player {
   height: 70%;
-  background: linear-gradient(
-    0deg,
-    rgba(18, 18, 18, 1) 68%,
-    rgba(36, 76, 73, 0.9794511554621849) 100%
-  );
+  background: rgb(36,76,73);
+background: linear-gradient(180deg, rgba(36,76,73,1) 0%, rgba(18,18,18,1) 5%);
 }
 
 .player {
