@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JeonghakHeo/Player-Ui.git"
+    "url": "git+https://github.com/JeonghakHeo/charlies-player.git"
   },
   "author": "Charlie",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JeonghakHeo/Player-Ui/issues"
+    "url": "https://github.com/JeonghakHeo/charlies-player/issues"
   },
-  "homepage": "https://github.com/JeonghakHeo/Player-Ui#readme",
+  "homepage": "https://github.com/JeonghakHeo/charlies-player#readme",
   "dependencies": {
     "axios": "^0.26.1",
     "cors": "^2.8.5",
