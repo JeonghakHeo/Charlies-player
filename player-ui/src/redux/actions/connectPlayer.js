@@ -1,14 +1,10 @@
 import {
   SET_PLAYER_REQUEST,
   SET_PLAYER_SUCCESS,
-  SET_PLAYER_FAIL,
   CONNECT_PLAYER_REQUEST,
   CONNECT_PLAYER_SUCCESS,
-  CONNECT_PLAYER_FAIL,
   SET_TRACK,
-  SET_PAUSE,
   SET_PLAYER_STATE,
-  SET_ACTIVE,
 } from '../constants/playerConstants'
 
 const connectPlayer = (token) => async (dispatch, getState) => {

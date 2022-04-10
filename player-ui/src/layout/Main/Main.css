@@ -1,3 +1,9 @@
+
+.app {
+  width: 100vw;
+  height: 100%;
+}
+
 .navbar {
   position: fixed;
   top: 0;
@@ -5,11 +11,6 @@
 }
 
 .playlist {
-  width: 100vw;
-  height: 100%;
-}
-
-.playlist-info {
   height: 30%;
   display: flex;
   align-items: center;
@@ -22,17 +23,17 @@
 }
 
 
-.playlist-details {
+.playlist-info {
   margin-top: 70px;
 }
 
-.playlist-player {
+.playlist-playlist{
   height: 70%;
   background: rgb(36,76,73);
 background: linear-gradient(180deg, rgba(36,76,73,1) 0%, rgba(18,18,18,1) 5%);
 }
 
-.player {
+.playlist-player {
   background-color: #181818;
   overflow: hidden;
   position: fixed;
@@ -45,28 +46,6 @@ background: linear-gradient(180deg, rgba(36,76,73,1) 0%, rgba(18,18,18,1) 5%);
   justify-content: space-between;
 }
 
-/* Style the links inside the navigation bar */
-.asd a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.asd a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Add a color to the active/current link */
-.asd a.active {
-  background-color: #04aa6d;
-  color: white;
-}
 
 .divider {
   width: 100%;

@@ -8,8 +8,10 @@ import Playlists from '../components/Playlists/Playlists'
 import Player from '../components/Player/Player'
 import {
   getPlaylistInfo,
-  getArtistInfo,
   getMyLikedSongs,
+  getMyPlaylists,
+  getMyProfile,
+  getArtistInfo,
 } from '../../redux/actions/actions'
 
 const Main = () => {
@@ -20,7 +22,10 @@ const Main = () => {
   const { loading: myPlaylistsInfoLoading } = myPlaylists
 
   const playlist = useSelector((state) => state.playlist)
-  const { loading: playlistLoding, playlistInfo } = playlist
+  const { loading: playlistLoding } = playlist
+
+  const myLikedSongs = useSelector((state) => state.myLikedSongs)
+  const { loading: myLikedSongsLoading } = myLikedSongs
 
   const artist = useSelector((state) => state.artist)
   const { loading: artistLoading } = artist
@@ -28,9 +33,11 @@ const Main = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(getMyProfile())
+    dispatch(getMyPlaylists())
     dispatch(getPlaylistInfo())
-    dispatch(getArtistInfo(playlistInfo?.owner?.id))
     dispatch(getMyLikedSongs())
+    dispatch(getArtistInfo())
   }, [dispatch])
 
   return (
@@ -38,23 +45,24 @@ const Main = () => {
       {myProfileInfoLoading ||
       myPlaylistsInfoLoading ||
       playlistLoding ||
+      myLikedSongsLoading ||
       artistLoading ? (
         <Spinner />
       ) : (
         <>
-          <div className='playlist'>
-            <div className='playlist-info'>
+          <div className='app'>
+            <div className='playlist'>
               <nav className='navbar'>
                 <Navbar />
               </nav>
-              <div className='playlist-details'>
+              <div className='playlist-info'>
                 <PlaylistInfo />
               </div>
             </div>
-            <div className='playlist-player'>
+            <div className='playlist-playlist'>
               <Playlists />
             </div>
-            <div className='player'>
+            <div className='playlist-player'>
               <hr
                 className='divider'
                 style={{

@@ -1,5 +1,7 @@
 import {
+  LIKE_SONG_RESET,
   LIKE_SONG_SUCCESS,
+  UNLIKE_SONG_RESET,
   UNLIKE_SONG_SUCCESS,
 } from '../constants/playerConstants'
 import {
@@ -156,11 +158,20 @@ export const likeHandlerReducer = (
         like: true,
       }
 
+    case LIKE_SONG_RESET: {
+      return {
+        like: false,
+      }
+    }
     case UNLIKE_SONG_SUCCESS:
       return {
         unlike: true,
       }
 
+    case UNLIKE_SONG_RESET:
+      return {
+        unlike: false,
+      }
     default:
       return state
   }

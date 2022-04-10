@@ -13,7 +13,11 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ListIcon from '@mui/icons-material/List'
-import { getPlaylistInfo, logout } from '../../../redux/actions/actions'
+import {
+  getArtistInfo,
+  getPlaylistInfo,
+  logout,
+} from '../../../redux/actions/actions'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -42,8 +46,9 @@ const Navbar = () => {
     dispatch(logout())
   }
 
-  const handleClick = (playlistId) => {
-    dispatch(getPlaylistInfo(playlistId))
+  const changePlaylist = (item) => {
+    dispatch(getPlaylistInfo(item?.id))
+    dispatch(getArtistInfo(item?.owner?.id))
   }
 
   return (
@@ -97,7 +102,7 @@ const Navbar = () => {
                         backgroundColor: '#3e3e3e',
                       },
                     }}
-                    onClick={() => handleClick(item.id)}
+                    onClick={() => changePlaylist(item)}
                   >
                     <Typography color='white' variant='body2'>
                       {item?.name}
@@ -132,9 +137,7 @@ const Navbar = () => {
                 backgroundColor: '#535353',
               }}
               src={myProfileInfo?.images[0]?.url}
-            >
-              {/* <PersonOutlineIcon fontSize='medium' /> */}
-            </Avatar>
+            />
             <Typography variant='h4' textTransform='none' sx={{ mr: 0.5 }}>
               {myProfileInfo?.display_name}
             </Typography>
@@ -150,7 +153,7 @@ const Navbar = () => {
               sx={{
                 position: 'absolute',
                 width: '180px',
-                top: '55px',
+                top: '57px',
                 right: '25px',
                 backgroundColor: '#282828',
                 borderRadius: '3px',

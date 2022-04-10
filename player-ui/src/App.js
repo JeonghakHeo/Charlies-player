@@ -1,18 +1,21 @@
 import axios from 'axios'
 import './App.css'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 import Main from './layout/Main/Main'
 import Spinner from './layout/components/utils/Spinner/Spinner'
 import connectPlayer from './redux/actions/connectPlayer'
-import { getMyPlaylists, getMyProfile } from './redux/actions/actions'
 
 const App = () => {
   const dispatch = useDispatch()
 
   const [token, setToken] = useState(null)
-  const loading = false
+
+  const player = useSelector((state) => state.player)
+  const { loading } = player
+
   const params = new URLSearchParams(window.location.search)
 
   const getToken = async () => {
@@ -42,9 +45,20 @@ const App = () => {
     }
   }
 
+  useEffect(() => {
+    dispatch(connectPlayer(JSON.parse(localStorage.getItem('token'))))
+  }, [dispatch])
+
   const Login = () => {
     return (
-      <div className='login'>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '90vh',
+        }}
+      >
         <Button
           variant='contained'
           sx={{
@@ -59,21 +73,15 @@ const App = () => {
         >
           Login with Spotify
         </Button>
-      </div>
+      </Box>
     )
   }
 
-  useEffect(() => {
-    dispatch(connectPlayer(JSON.parse(localStorage.getItem('token'))))
-    dispatch(getMyProfile())
-    dispatch(getMyPlaylists())
-  })
-
   return (
     <>
-      {token || JSON.parse(localStorage.getItem('token')) ? (
-        <Main token={token} />
-      ) : loading && !token ? (
+      {token || (JSON.parse(localStorage.getItem('token')) && !loading) ? (
+        <Main />
+      ) : loading && token ? (
         <Spinner />
       ) : !token ? (
         <Login />

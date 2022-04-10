@@ -25,7 +25,6 @@ import {
   toggleShuffle,
   toggleRepeat,
   setPlaybackVolume,
-  getMyLikedSongs,
 } from '../../../redux/actions/actions'
 
 const useStyle = makeStyles({
@@ -143,9 +142,7 @@ const Player = () => {
       }, 1000)
       return () => clearInterval(timer)
     }
-
-    dispatch(getMyLikedSongs())
-  }, [dispatch, playerState])
+  }, [playerState])
 
   const formatDuration = (duration) => {
     const minutes = Math.floor(duration / 60000)
@@ -156,7 +153,6 @@ const Player = () => {
   return (
     <Box
       sx={{
-        backgroundColor: '',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-around',
@@ -187,7 +183,7 @@ const Player = () => {
         <Box sx={{ marginRight: '25px' }}>
           <Typography variant='body2'>{currentTrack?.name}</Typography>
           <Typography variant='subtitle2'>
-            {currentTrack?.artists?.map((artist) => artist.name)}
+            {currentTrack?.artists?.map((artist) => artist.name).join(', ')}
           </Typography>
         </Box>
 
@@ -231,7 +227,6 @@ const Player = () => {
       >
         <Box
           sx={{
-            backgroundColor: '',
             width: 'inehrit',
             textAlign: 'center',
             display: 'flex',

@@ -97,7 +97,7 @@ export const getMyLikedSongs = () => async (dispatch) => {
 }
 
 export const getPlaylistInfo =
-  (playlistId = '1H8NiwW6ogBH2bSfBKY0EN') =>
+  (playlistId = '37i9dQZEVXbMDoHDwVN2tF') =>
   async (dispatch) => {
     try {
       dispatch({ type: GET_PLAYLIST_REQUEST })
@@ -123,7 +123,7 @@ export const getPlaylistInfo =
   }
 
 export const getArtistInfo =
-  (artistId = '1277747827') =>
+  (artistId = 'spotify') =>
   async (dispatch) => {
     try {
       dispatch({ type: GET_ARTIST_REQUEST })
@@ -331,9 +331,6 @@ export const setPlaybackVolume = (volume) => async (dispatch, getState) => {
 
 export const logout = () => async (dispatch, getState) => {
   try {
-    const { playerController } = getState().player
-
-    playerController.disconnect()
     localStorage.removeItem('token')
     localStorage.removeItem('deviceId')
 

@@ -60,15 +60,6 @@ const Playlists = () => {
 
   const tracks = playlistInfo?.tracks?.items
 
-  // ******************************************************************** //
-
-  // const filterArtists = tracks?.map((track) =>
-  //   track?.track?.artists?.map((artist) => artist.name)
-  // )
-  // console.log(filterArtists)
-  // console.log(filterArtists?.forEach((artist) => artist.join(', ')))
-
-  // ******************************************************************** //
   const handlePlay = (position) => {
     dispatch(playSong(playlistInfo?.id, position))
   }
@@ -83,7 +74,8 @@ const Playlists = () => {
   }
 
   const openMenu = () => {
-    setMenuOpen(!menuOpen)
+    // setMenuOpen(!menuOpen)
+    window.alert('More features are waiting to come!')
   }
 
   const formatDuration = (duration) => {
@@ -95,9 +87,6 @@ const Playlists = () => {
   const formatDate = (addedAt) => {
     return moment.utc(addedAt).format('MMM D, YYYY')
   }
-
-  // const artistsArray = tracks?.map((item) => item?.track?.artists)
-  // console.log(artistsArray[0][0].name)
 
   return (
     <>
@@ -138,6 +127,9 @@ const Playlists = () => {
                 color='secondary'
                 sx={{ fontSize: '40px' }}
                 className={classes.icon}
+                onClick={() =>
+                  window.alert('More features are waiting to come!')
+                }
               />
               <MoreHorizIcon
                 color='secondary'
@@ -146,7 +138,7 @@ const Playlists = () => {
                 onClick={openMenu}
               />
             </Box>
-            <Collapse in={menuOpen} timeout='auto' unmountOnExit>
+            {/* <Collapse in={menuOpen} timeout='auto' unmountOnExit>
               <List
                 disablePadding
                 sx={{
@@ -175,7 +167,7 @@ const Playlists = () => {
                   </ListItemButton>
                 </ListItem>
               </List>
-            </Collapse>
+            </Collapse> */}
           </Grid>
         </Grid>
       </Box>
@@ -298,7 +290,12 @@ const Playlists = () => {
                       >
                         {track?.track?.name}
                       </Typography>
-                      <Typography variant='subtitle1'>Simon Field</Typography>
+                      <Typography variant='subtitle1'>
+                        {track?.track?.artists
+                          .map((artist) => artist)
+                          .map((item) => item.name)
+                          .join(', ')}
+                      </Typography>
                     </Box>
                   </Grid>
                   <Grid item xs={3}>

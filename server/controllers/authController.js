@@ -54,7 +54,6 @@ export const requestAccessToken = (req, res) => {
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       const { access_token, refresh_token } = body
-      res.cookie('accessToken', access_token)
       res.send({ access_token, refresh_token })
     } else {
       res.status(500)
