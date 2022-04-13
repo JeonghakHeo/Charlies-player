@@ -148,6 +148,7 @@ export const getArtistInfo =
     }
   }
 
+// position = index of song in playlist
 export const playSong =
   (playlistId = '1H8NiwW6ogBH2bSfBKY0EN', position = 0, positionMs = 0) =>
   async (dispatch, getState) => {

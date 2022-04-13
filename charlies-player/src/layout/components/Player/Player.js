@@ -64,15 +64,32 @@ const Player = () => {
   const likeHandler = useSelector((state) => state.likeHandler)
   const { like, unlike } = likeHandler
 
-  const index = playlistInfo?.tracks?.items?.findIndex(
-    (item) => item?.track?.id === currentTrack?.id
-  )
+  const [volume, setVolume] = useState(50)
 
   const [sliderPosition, setSliderPosition] = useState(
     Math.floor(playerState?.position / 1000)
   )
 
-  const [volume, setVolume] = useState(50)
+  // track position
+  const index = playlistInfo?.tracks?.items?.findIndex(
+    (item) => item?.track?.id === currentTrack?.id
+  )
+
+  // song control
+  // 1. onMouseDown pause player
+  // 2. setSliderPosition
+  // 3. onMouseUp playSong(sliderPosition) & start timer
+  const handleMouseDown = () => {
+    playerController.pause()
+  }
+
+  const handlePosition = (e, newValue) => {
+    setSliderPosition(newValue)
+  }
+
+  const handleMouseUp = () => {
+    dispatch(playSong(playlistInfo?.id, index, sliderPosition))
+  }
 
   const togglePlay = () => {
     playerController.togglePlay()
@@ -88,6 +105,7 @@ const Player = () => {
     playerController.nextTrack()
   }
 
+  // other player functions
   const isAlreadyLiked = myLikedSongsIds?.includes(currentTrack?.id)
 
   const updateLike = () => {
@@ -116,21 +134,6 @@ const Player = () => {
     setVolume(0)
     playerController.setVolume(0)
     dispatch(setPlaybackVolume(0))
-  }
-
-  // 1. onMouseDown pause player
-  // 2. setSliderPosition
-  // 3. onMouseUp playSong(sliderPosition) & start timer
-  const handleMouseDown = () => {
-    playerController.pause()
-  }
-
-  const handlePosition = (e, newValue) => {
-    setSliderPosition(newValue)
-  }
-
-  const handleMouseUp = () => {
-    dispatch(playSong(playlistInfo?.id, index, sliderPosition))
   }
 
   useEffect(() => {

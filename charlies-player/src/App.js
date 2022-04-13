@@ -21,9 +21,9 @@ const App = () => {
   const getToken = async () => {
     try {
       const data = await axios.get(
-        `http://localhost:5000/api/auth/callback?code=${params.get(
-          'code'
-        )}&state=${params.get('state')}`
+        `/api/auth/callback?code=${params.get('code')}&state=${params.get(
+          'state'
+        )}`
       )
       setToken(data?.data?.access_token)
       localStorage.setItem('token', JSON.stringify(data?.data?.access_token))
@@ -32,7 +32,7 @@ const App = () => {
     }
   }
 
-  if (!token && params.has('code') && params.has('state')) {
+  if (!token || (token === null && params.has('code') && params.has('state'))) {
     getToken()
   }
 
@@ -46,8 +46,10 @@ const App = () => {
   }
 
   useEffect(() => {
-    dispatch(connectPlayer(JSON.parse(localStorage.getItem('token'))))
-  }, [dispatch])
+    if (token) {
+      dispatch(connectPlayer(token))
+    }
+  }, [dispatch, token])
 
   const Login = () => {
     return (
@@ -86,7 +88,7 @@ const App = () => {
       ) : !token ? (
         <Login />
       ) : (
-        <Login />
+        ''
       )}
     </>
   )

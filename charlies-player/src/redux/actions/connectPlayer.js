@@ -7,7 +7,7 @@ import {
   SET_PLAYER_STATE,
 } from '../constants/playerConstants'
 
-const connectPlayer = (token) => async (dispatch, getState) => {
+const connectPlayer = (token) => async (dispatch) => {
   try {
     dispatch({ type: SET_PLAYER_REQUEST })
 
@@ -51,17 +51,9 @@ const connectPlayer = (token) => async (dispatch, getState) => {
           payload: state.track_window.current_track,
         })
 
-        // dispatch({ type: SET_PAUSE, payload: state.paused })
-
         player.getCurrentState().then((state) => {
           dispatch({ type: SET_PLAYER_STATE, payload: state })
         })
-
-        // player.getCurrentState().then((state) => {
-        //   !state
-        //     ? dispatch({ type: SET_ACTIVE, payload: false })
-        //     : dispatch({ type: SET_ACTIVE, payload: true })
-        // })
       })
     }
   } catch (error) {

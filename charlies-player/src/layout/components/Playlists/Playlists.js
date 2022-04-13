@@ -6,6 +6,7 @@ import moment from 'moment'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown'
 import Collapse from '@mui/material/Collapse'
@@ -107,22 +108,32 @@ const Playlists = () => {
               }}
             >
               {playerState?.paused ? (
-                <PlayCircleIcon
-                  color='primary'
-                  sx={{ fontSize: '70px' }}
-                  className={classes.play}
-                  onClick={togglePlay}
-                />
+                <Tooltip title='Play' placement='top' enterDelay={1500}>
+                  <PlayCircleIcon
+                    color='primary'
+                    sx={{ fontSize: '70px' }}
+                    className={classes.play}
+                    onClick={togglePlay}
+                  />
+                </Tooltip>
               ) : (
-                <PauseCircleIcon
-                  color='primary'
-                  sx={{ fontSize: '70px' }}
-                  className={classes.play}
-                  onClick={togglePlay}
-                />
+                <Tooltip title='Pause' placement='top' enterDelay={1500}>
+                  <PauseCircleIcon
+                    color='primary'
+                    sx={{ fontSize: '70px' }}
+                    className={classes.play}
+                    onClick={togglePlay}
+                  />
+                </Tooltip>
               )}
 
-              <FavoriteIcon color='primary' sx={{ fontSize: '40px' }} />
+              <Tooltip
+                title='Remove From Library'
+                placement='top'
+                enterDelay={1500}
+              >
+                <FavoriteIcon color='primary' sx={{ fontSize: '40px' }} />
+              </Tooltip>
               <ArrowCircleDownIcon
                 color='secondary'
                 sx={{ fontSize: '40px' }}

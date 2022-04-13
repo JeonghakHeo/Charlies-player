@@ -31,14 +31,14 @@ const Navbar = () => {
   const playlist = useSelector((state) => state.playlist)
   const { playlistInfo } = playlist
 
-  const [openMe, setOpenMe] = useState(false)
+  const [openProfile, setOpenProfile] = useState(false)
   const [openPlaylists, setOpenPlaylists] = useState(false)
 
-  const handleMe = () => {
-    setOpenMe(!openMe)
+  const handleProfile = () => {
+    setOpenProfile(!openProfile)
   }
 
-  const handlePlaylists = () => {
+  const handlePlaylistsMenu = () => {
     setOpenPlaylists(!openPlaylists)
   }
 
@@ -46,9 +46,9 @@ const Navbar = () => {
     dispatch(logout())
   }
 
-  const changePlaylist = (item) => {
-    dispatch(getPlaylistInfo(item?.id))
-    dispatch(getArtistInfo(item?.owner?.id))
+  const changePlaylist = (playlist) => {
+    dispatch(getPlaylistInfo(playlist?.id))
+    dispatch(getArtistInfo(playlist?.owner?.id))
   }
 
   return (
@@ -64,7 +64,7 @@ const Navbar = () => {
             color='white'
             disableRipple
             sx={{ mr: 1, backgroundColor: '#1c3e3c' }}
-            onClick={handlePlaylists}
+            onClick={handlePlaylistsMenu}
           >
             <ListIcon fontSize='small' />
           </IconButton>
@@ -91,9 +91,9 @@ const Navbar = () => {
               }}
             >
               <ListItem>
-                {myPlaylistsInfo?.items.map((item) => (
+                {myPlaylistsInfo?.items.map((playlist) => (
                   <ListItemButton
-                    key={item.id}
+                    key={playlist.id}
                     disableRipple
                     sx={{
                       borderRadius: '3px',
@@ -102,10 +102,10 @@ const Navbar = () => {
                         backgroundColor: '#3e3e3e',
                       },
                     }}
-                    onClick={() => changePlaylist(item)}
+                    onClick={() => changePlaylist(playlist)}
                   >
                     <Typography color='white' variant='body2'>
-                      {item?.name}
+                      {playlist?.name}
                     </Typography>
                   </ListItemButton>
                 ))}
@@ -126,7 +126,7 @@ const Navbar = () => {
                 backgroundColor: '#282828',
               },
             }}
-            onClick={handleMe}
+            onClick={handleProfile}
           >
             <Avatar
               sx={{
@@ -141,13 +141,13 @@ const Navbar = () => {
             <Typography variant='h4' textTransform='none' sx={{ mr: 0.5 }}>
               {myProfileInfo?.display_name}
             </Typography>
-            {openMe ? (
+            {openProfile ? (
               <ArrowDropUpIcon color='white' />
             ) : (
               <ArrowDropDownIcon color='white' />
             )}
           </Box>
-          <Collapse in={openMe} timeout='auto' unmountOnExit>
+          <Collapse in={openProfile} timeout='auto' unmountOnExit>
             <List
               disablePadding
               sx={{

@@ -5,32 +5,3 @@ login -> get token -> open App
 login: OAuth2.0 process
 click on Login -> getRedirectUrl -> redirect to spotify login -> logged in -> response back with code and state -> getToken -> exchange code with token -> store in localStorage -> open App
 
-
-<>
-          <div className='playlist'>
-            <div className='playlist-info'>
-              <nav className='navbar'>
-                <Navbar />
-              </nav>
-              <div className='playlist-details'>
-                <PlaylistInfo />
-              </div>
-            </div>
-            <div className='playlist-player'>
-              <Playlists />
-            </div>
-            <div className='player'>
-              <hr
-                className='divider'
-                style={{
-                  position: 'absolute',
-                  top: '0px',
-                  transform: 'translate(-20px, -9px)',
-                }}
-              />
-              <Player />
-            </div>
-          </div>
-        </>
-      )}
-    </>

@@ -13,6 +13,7 @@ import {
   getMyProfile,
   getArtistInfo,
 } from '../../redux/actions/actions'
+import connectPlayer from '../../redux/actions/connectPlayer'
 
 const Main = () => {
   const myProfile = useSelector((state) => state.myProfile)
@@ -32,13 +33,16 @@ const Main = () => {
 
   const dispatch = useDispatch()
 
+  const token = JSON.parse(localStorage.getItem('token'))
   useEffect(() => {
-    dispatch(getMyProfile())
-    dispatch(getMyPlaylists())
-    dispatch(getPlaylistInfo())
-    dispatch(getMyLikedSongs())
-    dispatch(getArtistInfo())
-  }, [dispatch])
+    if (token) {
+      dispatch(getMyProfile())
+      dispatch(getMyPlaylists())
+      dispatch(getPlaylistInfo())
+      dispatch(getMyLikedSongs())
+      dispatch(getArtistInfo())
+    }
+  }, [dispatch, token])
 
   return (
     <>
