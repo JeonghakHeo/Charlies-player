@@ -1,3 +1,4 @@
+import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
@@ -12,6 +13,18 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/spotify', spotifyRoutes)
+
+const __dirname = path.resolve()
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../chralies-player/build')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, 'chralies-player', 'build', 'index.html')
+    )
+  )
+}
 
 const PORT = process.env.PORT
 
